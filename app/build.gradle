@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.dagger.hilt.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -29,11 +32,24 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += ["-opt-in=kotlin.RequiresOptIn",
+                             // Enable experimental coroutines APIs, including Flow
+                             "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                             "-opt-in=kotlinx.coroutines.FlowPreview",
+                             "-opt-in=kotlin.Experimental"]
+    }
+
+    // Allow references to generated code
+    kapt {
+        correctErrorTypes true
+    }
+    buildFeatures {
+        viewBinding true
+//        dataBinding true
     }
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
@@ -41,4 +57,47 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.1'
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1") {
+        exclude module: "protobuf-lite"
+    }
+    //hilt
+    implementation "com.google.dagger:hilt-android:2.44.2"
+    kapt "com.google.dagger:hilt-compiler:2.44.2"
+    //mockito
+    androidTestImplementation "org.mockito:mockito-core:4.4.0"
+    testImplementation 'org.mockito:mockito-core:4.4.0'
+    testImplementation 'org.mockito:mockito-inline:4.4.0'
+    //splash
+    implementation 'androidx.core:core-splashscreen:1.0.0'
+    //log
+    implementation "com.jakewharton.timber:timber:$timber_version"
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    // Retrofit with Moshi Converter
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    // Moshi
+    implementation 'com.squareup.moshi:moshi-kotlin:1.9.3'
+    //okhttp
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:$okhttp3bom_version"))
+    // define any required OkHttp artifacts without version
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+    // Coil
+    implementation "io.coil-kt:coil:2.2.2"
+    //coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
+    //navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+    androidTestImplementation "androidx.navigation:navigation-testing:$navigation_version"
+    //datastore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    //epoxy
+    implementation "com.airbnb.android:epoxy:5.1.1"
+    // Add the annotation processor if you are using Epoxy's annotations (recommended)
+    kapt "com.airbnb.android:epoxy-processor:5.1.1"
 }
