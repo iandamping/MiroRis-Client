@@ -1,0 +1,100 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="spacing_xsmall">2dp</dimen>
+    <dimen name="spacing_small">4dp</dimen>
+    <dimen name="spacing_medium">8dp</dimen>
+    <dimen name="spacing_xmedium">10dp</dimen>
+    <dimen name="spacing_xxmedium">13dp</dimen>
+    <dimen name="spacing_large">16dp</dimen>
+    <dimen name="spacing_xlarge">20dp</dimen>
+    <dimen name="spacing_24dp">24dp</dimen>
+    <dimen name="spacing_74dp">74dp</dimen>
+    <dimen name="spacing_xxxlarge">30dp</dimen>
+    <dimen name="spacing_huge">32dp</dimen>
+    <dimen name="spacing_xhuge">35dp</dimen>
+    <dimen name="spacing_xxhuge">39dp</dimen>
+    <dimen name="spacing_medium_huge">60dp</dimen>
+    <dimen name="spacing_extra_huge">64dp</dimen>
+    <dimen name="spacing_big">80dp</dimen>
+    <dimen name="spacing_extra_super_duper_huge">100dp</dimen>
+
+    <dimen name="gpn_printed_by">9sp</dimen>
+    <dimen name="gpn_merchant_name">13sp</dimen>
+    <dimen name="gpn_merchant_nmid">11sp</dimen>
+
+    <dimen name="letter_xsmall">12sp</dimen>
+    <dimen name="letter_xxsmall">11sp</dimen>
+    <dimen name="letter_xxxsmall">10sp</dimen>
+    <dimen name="letter_small">14sp</dimen>
+    <dimen name="letter_medium">16sp</dimen>
+    <dimen name="letter_large">18sp</dimen>
+    <dimen name="letter_xlarge">20sp</dimen>
+    <dimen name="letter_xxlarge">22sp</dimen>
+    <dimen name="letter_xxxlarge">24sp</dimen>
+    <dimen name="letter_xxxxlarge">26sp</dimen>
+    <dimen name="letter_customlarge">32sp</dimen>
+    <dimen name="letter_customlarge_x">34sp</dimen>
+    <dimen name="letter_xcustomlarge">48sp</dimen>
+    <dimen name="pagerTitleTextSize">12sp</dimen>
+
+    <!--default text size-->
+    <dimen name="text_default_letter_small">14sp</dimen>
+    <dimen name="text_default_letter_medium">18sp</dimen>
+    <dimen name="text_default_letter_large">22sp</dimen>
+
+    <dimen name="text_default_page_tittle">20sp</dimen>
+    <dimen name="text_default_subtittle1">16sp</dimen>
+    <dimen name="text_default_body2">14sp</dimen>
+
+    <dimen name="permata_spacing_xxsmall">5dp</dimen>
+    <dimen name="permata_spacing_xsmall">7dp</dimen>
+    <dimen name="permata_spacing_medium">12dp</dimen>
+    <dimen name="permata_spacing_xmedium">15dp</dimen>
+    <dimen name="permata_spacing_xxmedium">17dp</dimen>
+    <dimen name="permata_spacing_large">25dp</dimen>
+    <dimen name="permata_spacing_huge">40dp</dimen>
+
+    <dimen name="permata_xxsmall_textsize">13sp</dimen>
+    <dimen name="permata_xsmall_textsize">15sp</dimen>
+    <dimen name="permata_small_textsize">16sp</dimen>
+    <dimen name="permata_xxxmedium_textsize">17sp</dimen>
+    <dimen name="permata_xxmedium_textsize">18sp</dimen>
+    <dimen name="permata_xmedium_textsize">21sp</dimen>
+    <dimen name="permata_medium_textsize">25sp</dimen>
+    <dimen name="permata_xlarge_textsize">28sp</dimen>
+    <dimen name="permata_large_textsize">30sp</dimen>
+
+    <dimen name="fab_main_activity_size">40dp</dimen>
+    <dimen name="fab_main_activity_custom_size">65dp</dimen>
+    <dimen name="qr_image_size">410dp</dimen>
+    <dimen name="loading_dimens_size">70dp</dimen>
+    <dimen name="splash_logo_size">350dp</dimen>
+    <dimen name="splash_account_logo_size">390dp</dimen>
+    <dimen name="detail_message_image">300dp</dimen>
+    <dimen name="success_logo_size">150dp</dimen>
+    <dimen name="otp_logo_size">140dp</dimen>
+
+
+    <dimen name="image_refresh_dimension">15dp</dimen>
+    <dimen name="button_middle_elevation">14dp</dimen>
+    <dimen name="captcha_image_width">60dp</dimen>
+
+    <dimen name="captcha_image_height">54dp</dimen>
+
+    <dimen name="otp_button_height_size">50dp</dimen>
+    <dimen name="otp_button_width_size">50dp</dimen>
+    <dimen name="profile_button_size">65dp</dimen>
+    <dimen name="profile_button_width">250dp</dimen>
+
+    <dimen name="otp_margin_start">55dp</dimen>
+    <dimen name="otp_margin_end">55dp</dimen>
+    <dimen name="button_gradient_height">55dp</dimen>
+    <dimen name="close_image_default_height_size">16dp</dimen>
+    <dimen name="close_image_default_width_size">16dp</dimen>
+    <dimen name="up_image_default_width_size">18dp</dimen>
+    <dimen name="up_image_default_height_size">18dp</dimen>
+
+    <dimen name="up_imagebutton_height">14dp</dimen>
+    <dimen name="up_imagebutton_width">24dp</dimen>
+    <dimen name="design_fab_image_size" tools:override="true">65dp</dimen>
+</resources>
