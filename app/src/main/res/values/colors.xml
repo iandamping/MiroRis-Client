@@ -7,4 +7,26 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="green_background">#53B1B4</color>
+    <color name="black_text">#464646</color>
+    <color name="black_text_hint">#6C6C6C</color>
+    <color name="btn_grey">#B2B2B2</color>
+    <color name="orange">#EB9144</color>
+    <color name="error_red">#F25858</color>
+    <color name="white_grey">#FBFBFB</color>
+    <color name="black_text_2">#4E4E4E</color>
+    <color name="billing_amnt_bg">#F3F3F3</color>
+    <color name="green_bg">#ddeff0</color>
+    <color name="inactive_grey">#e2e2e2</color>
+    <color name="text_blue">#496BC7</color>
+    <color name="button_blue">#4e67cb</color>
+    <color name="blue_bg">#dbe1f4</color>
+    <color name="text_red">#DE6336</color>
+    <color name="red_bg">#f8e0d7</color>
+    <color name="text_yellow">#E6BE13</color>
+    <color name="yellow_bg">#faf2d0</color>
+    <color name="transparrent_green">#F6FBFB</color>
+    <color name="transparrent_orange">#fef9f5</color>
+    <color name="grey_divider">#b6b6b6</color>
+    <color name="dark_orange">#EA4F31</color>
 </resources>

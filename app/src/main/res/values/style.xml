@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="RoundBorderEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:radius">8dp</item>
+        <item name="boxStrokeColor">@color/green_background</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="colorAccent">@color/black_text</item>
+        <item name="android:textColorHint">@color/black_text_hint</item>
+    </style>
+
+
+    <style name="roundCustomCorner">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>
