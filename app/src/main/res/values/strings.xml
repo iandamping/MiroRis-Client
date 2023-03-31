@@ -8,4 +8,25 @@
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
     <string name="save">Save</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="alamat">Alamat</string>
+    <string name="no_handphone">No. Handpohne</string>
+    <string name="kota">Kota</string>
+    <string name="data_rekening">Data Rekening</string>
+    <string name="bank">Bank</string>
+    <string name="nomor_rekening">Nomor rekening</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="rubah_password">Rubah password</string>
+    <string name="informasi_personal">Informasi Personal</string>
+
+
+    <string-array name="default_bank_spinner">
+        <item>BCA</item>
+        <item>Mandiri</item>
+        <item>BRI</item>
+        <item>BNI</item>
+
+
+    </string-array>
 </resources>
