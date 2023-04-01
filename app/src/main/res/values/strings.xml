@@ -19,6 +19,12 @@
     <string name="save_changes">Save Changes</string>
     <string name="rubah_password">Rubah password</string>
     <string name="informasi_personal">Informasi Personal</string>
+    <string name="mini_detail_product_image">Mini detail product image</string>
+    <string name="bank_spinner">Bank Spinner</string>
+    <string name="share">Share</string>
+    <string name="link">Link</string>
+    <string name="download">Download</string>
+    <string name="detail_product_image">detail product image</string>
 
 
     <string-array name="default_bank_spinner">

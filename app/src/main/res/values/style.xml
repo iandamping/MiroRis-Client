@@ -10,6 +10,20 @@
     </style>
 
 
+    <style name="qrCustomCorner">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">8dp</item>
+        <item name="cornerSizeTopRight">8dp</item>
+        <item name="cornerSizeBottomRight">8dp</item>
+        <item name="cornerSizeBottomLeft">8dp</item>
+    </style>
+
+    <style name="topCustomCorner">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">25dp</item>
+        <item name="cornerSizeTopRight">25dp</item>
+    </style>
+
     <style name="roundCustomCorner">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
