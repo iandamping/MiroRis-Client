@@ -25,6 +25,13 @@
     <string name="link">Link</string>
     <string name="download">Download</string>
     <string name="detail_product_image">detail product image</string>
+    <string name="item_product_banner">item product banner</string>
+    <string name="select_category">select category</string>
+    <string name="filter">FILTER</string>
+    <string name="rating_of_item">rating of item</string>
+    <string name="image_of_item">image of item</string>
+    <string name="switch_to_grid">switch to grid</string>
+    <string name="switch_to_list">switch to list</string>
 
 
     <string-array name="default_bank_spinner">
@@ -32,7 +39,9 @@
         <item>Mandiri</item>
         <item>BRI</item>
         <item>BNI</item>
+    </string-array>
 
-
+    <string-array name="default_product_category">
+        <item>Category</item>
     </string-array>
 </resources>
