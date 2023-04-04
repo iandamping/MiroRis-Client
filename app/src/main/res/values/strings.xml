@@ -32,6 +32,7 @@
     <string name="image_of_item">image of item</string>
     <string name="switch_to_grid">switch to grid</string>
     <string name="switch_to_list">switch to list</string>
+    <string name="right_chevron">right chevron</string>
 
 
     <string-array name="default_bank_spinner">
