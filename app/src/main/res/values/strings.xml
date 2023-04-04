@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Miroris Client</string>
+    <string name="toolbar_name">MiroRIS</string>
     <string name="username_hint">Email/No. Handphone/Username</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
@@ -33,6 +34,7 @@
     <string name="switch_to_grid">switch to grid</string>
     <string name="switch_to_list">switch to list</string>
     <string name="right_chevron">right chevron</string>
+    <string name="account">Account</string>
 
 
     <string-array name="default_bank_spinner">

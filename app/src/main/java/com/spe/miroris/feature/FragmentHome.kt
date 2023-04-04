@@ -16,7 +16,19 @@ class FragmentHome : BaseFragmentViewBinding<FragmentHomeBinding>(),
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
         get() = FragmentHomeBinding::inflate
 
+
     override fun initView() {
+        val toolbar = binding.toolbarHome
+        toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_to_profile -> {
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
         val spinner = binding.spHomeCategory
         ArrayAdapter.createFromResource(
             requireContext(),
