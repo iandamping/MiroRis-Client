@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/fragmentHome"
         android:name="com.spe.miroris.feature.FragmentHome"
-        android:label="FragmentHome" />
+        android:label="FragmentHome" >
+        <action
+            android:id="@+id/action_fragmentHome_to_dialogFragmentFilter"
+            app:destination="@id/dialogFragmentFilter" />
+    </fragment>
+    <dialog
+        android:id="@+id/dialogFragmentFilter"
+        android:name="com.spe.miroris.feature.DialogFragmentFilter"
+        android:label="DialogFragmentFilter" />
 </navigation>

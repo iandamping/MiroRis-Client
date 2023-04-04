@@ -64,14 +64,14 @@
         android:layout_marginBottom="8dp"
         android:src="@drawable/round_view_list_24"
         app:layout_constraintBottom_toBottomOf="@+id/spHomeCategory"
-        app:layout_constraintEnd_toStartOf="@+id/textView3"
+        app:layout_constraintEnd_toStartOf="@+id/tvHomeFilterProduct"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ivHomeSelectGrid"
         app:layout_constraintTop_toBottomOf="@+id/svHomeProduct"
         android:contentDescription="@string/switch_to_list" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tvHomeFilterProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
