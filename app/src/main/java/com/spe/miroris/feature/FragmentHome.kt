@@ -22,6 +22,7 @@ class FragmentHome : BaseFragmentViewBinding<FragmentHomeBinding>(),
         toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_to_profile -> {
+                    findNavController().navigate(FragmentHomeDirections.actionFragmentHomeToFragmentProfile())
                     true
                 }
                 else -> {

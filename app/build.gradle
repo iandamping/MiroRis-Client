@@ -92,6 +92,8 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
     androidTestImplementation "androidx.navigation:navigation-testing:$navigation_version"
+    //navigation test
+    androidTestImplementation "androidx.navigation:navigation-testing:$navigation_version"
     //datastore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     //epoxy

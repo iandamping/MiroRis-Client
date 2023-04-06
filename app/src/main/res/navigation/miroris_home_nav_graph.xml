@@ -11,9 +11,24 @@
         <action
             android:id="@+id/action_fragmentHome_to_dialogFragmentFilter"
             app:destination="@id/dialogFragmentFilter" />
+        <action
+            android:id="@+id/action_fragmentHome_to_fragmentProfile"
+            app:destination="@id/fragmentProfile" />
     </fragment>
     <dialog
         android:id="@+id/dialogFragmentFilter"
         android:name="com.spe.miroris.feature.DialogFragmentFilter"
         android:label="DialogFragmentFilter" />
+    <fragment
+        android:id="@+id/fragmentProfile"
+        android:name="com.spe.miroris.feature.FragmentProfile"
+        android:label="FragmentProfile" >
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentEditProfile"
+            app:destination="@id/fragmentEditProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentEditProfile"
+        android:name="com.spe.miroris.feature.FragmentEditProfile"
+        android:label="FragmentEditProfile" />
 </navigation>
