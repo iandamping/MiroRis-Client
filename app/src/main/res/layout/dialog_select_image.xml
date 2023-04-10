@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        tools:src="@tools:sample/backgrounds/scenic"
+        android:contentDescription="@string/image_from_camera" />
+
+    <ImageView
+        android:id="@+id/ivImageSelect"
+        android:layout_width="@dimen/select_image_width"
+        android:layout_height="@dimen/select_image_height"
+        android:layout_marginStart="@dimen/select_image_margin_start"
+        android:layout_marginBottom="@dimen/select_image_margin_bottom"
+        android:src="@drawable/ic_twotone_done_white_24"
+        android:contentDescription="@string/accept_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivImageDelete"
+        android:layout_width="@dimen/select_image_width"
+        android:layout_height="@dimen/select_image_height"
+        android:layout_marginEnd="@dimen/select_image_margin_end"
+        android:layout_marginBottom="@dimen/select_image_margin_bottom"
+        android:contentDescription="@string/delete_image"
+        android:src="@drawable/ic_twotone_delete_white_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

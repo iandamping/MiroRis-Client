@@ -1,0 +1,58 @@
+package com.spe.miroris.di
+
+import android.content.Context
+import androidx.camera.core.ImageCapture
+import com.spe.miroris.R
+import com.spe.miroris.di.qualifier.CameraxOutputDirectory
+import com.spe.miroris.di.qualifier.CameraxOutputOptions
+import com.spe.miroris.di.qualifier.CameraxPhotoFile
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
+import javax.inject.Singleton
+
+/**
+ * Created by Ian Damping on 28,May,2021
+ * Github https://github.com/iandamping
+ * Indonesia.
+ */
+@Module
+@InstallIn(SingletonComponent::class)
+object CameraxFileModule {
+
+    private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+
+    @Provides
+    @Singleton
+    @CameraxOutputDirectory
+    fun provideOutputDirectory(@ApplicationContext context: Context): File {
+        val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
+            File(it, context.resources.getString(R.string.app_name)).apply { mkdirs() }
+        }
+        return if (mediaDir != null && mediaDir.exists())
+            mediaDir else context.filesDir
+    }
+
+    @Provides
+    @Singleton
+    @CameraxPhotoFile
+    fun providePhotoFile(@CameraxOutputDirectory outputDirectory: File): File {
+        return File(
+            outputDirectory,
+            SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis()) + ".jpg"
+        )
+    }
+
+    @Provides
+    @Singleton
+    @CameraxOutputOptions
+    fun provideOutputOption(@CameraxPhotoFile photoFile: File): ImageCapture.OutputFileOptions {
+        return ImageCapture.OutputFileOptions.Builder(photoFile).build()
+    }
+
+}

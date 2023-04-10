@@ -50,7 +50,7 @@ class FragmentHome : BaseFragmentViewBinding<FragmentHomeBinding>(),
 
     override fun viewCreated() {
         binding.tvHomeFilterProduct.setOnClickListener {
-            findNavController().navigate(FragmentHomeDirections.actionFragmentHomeToDialogFragmentFilter())
+            findNavController().navigate(FragmentHomeDirections.actionFragmentHomeToFragmentAddProductFirstStep())
         }
 
     }
