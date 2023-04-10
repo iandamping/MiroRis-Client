@@ -11,7 +11,10 @@ import androidx.fragment.app.viewModels
 import coil.load
 import com.spe.miroris.R
 import com.spe.miroris.databinding.DialogSelectImageBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class DialogSelectImage : DialogFragment() {
     private val cameraVm: CameraViewModel by viewModels()
 

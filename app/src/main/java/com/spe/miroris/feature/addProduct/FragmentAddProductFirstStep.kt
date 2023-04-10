@@ -22,8 +22,10 @@ import com.spe.miroris.feature.addProduct.adapter.EpoxyAddProductImageController
 import com.spe.miroris.feature.addProduct.adapter.MultiAdapterData
 import com.spe.miroris.feature.addProduct.openCamera.CameraGalleryEnum
 import com.spe.miroris.feature.addProduct.openCamera.DialogSelectCameraOrGallery
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+@AndroidEntryPoint
 class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFirstStepBinding>(),
     EpoxyAddProductImageController.EpoxyAddProductImageClickListener,
     AdapterView.OnItemSelectedListener {

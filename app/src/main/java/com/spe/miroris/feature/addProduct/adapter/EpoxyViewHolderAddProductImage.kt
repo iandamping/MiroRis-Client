@@ -12,7 +12,7 @@ data class EpoxyViewHolderAddProductImage(
 
 
     override fun ItemMiniImageAddProductBinding.bind() {
-//        ivMiniAddProduct.load(data.image)
+        ivMiniAddProduct.load(data.image)
 
         root.setOnClickListener {
             onClick.invoke(data)

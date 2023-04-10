@@ -3,6 +3,7 @@ plugins {
     id 'com.android.application' version '7.4.2' apply false
     id 'com.android.library' version '7.4.2' apply false
     id 'org.jetbrains.kotlin.android' version '1.8.20' apply false
+    id "org.jetbrains.kotlin.kapt" version "1.8.20" apply false
     id 'com.google.dagger.hilt.android' version '2.45' apply false
     id 'androidx.navigation.safeargs.kotlin' version '2.5.2' apply false
 }
@@ -16,8 +17,8 @@ ext {
     livedata_version = '2.5.1'
     retrofit_version = '2.9.0'
     navigation_version = '2.5.3'
-    okhttp3bom_version = "4.10.0"
+    okhttp3bom_version = '5.0.0-alpha.11'
     fragment_version = "1.5.3"
-    camerax_version = '1.2.2'
+    camerax_version = '1.1.0'
     jacocoVersion = '0.8.7'
 }
