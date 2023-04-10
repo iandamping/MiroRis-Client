@@ -35,6 +35,15 @@
     <string name="switch_to_list">switch to list</string>
     <string name="right_chevron">right chevron</string>
     <string name="account">Account</string>
+    <string name="continue_add_product">Continue</string>
+    <string name="fund">Pendanaan</string>
+    <string name="fund_detail">Detail Pendanaan</string>
+    <string name="add_your_product_here">add your product here</string>
+    <string name="product_name">Nama Produk</string>
+    <string name="product_desc">Deskripsi Produk</string>
+    <string name="own_account">Rekening Sendiri</string>
+    <string name="produk_and_rekening"><![CDATA[Produk & Rekening]]></string>
+    <string name="product">Produk</string>
 
 
     <string-array name="default_bank_spinner">

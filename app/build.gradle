@@ -97,9 +97,9 @@ dependencies {
     //datastore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     //epoxy
-    implementation "com.airbnb.android:epoxy:5.1.1"
+    implementation "com.airbnb.android:epoxy:5.1.2"
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
-    kapt "com.airbnb.android:epoxy-processor:5.1.1"
+    kapt "com.airbnb.android:epoxy-processor:5.1.2"
     // Splash screen
     implementation 'androidx.core:core-splashscreen:1.0.0'
 }
