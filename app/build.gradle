@@ -44,10 +44,12 @@ android {
     kapt {
         correctErrorTypes true
     }
+
     buildFeatures {
         viewBinding true
         dataBinding true
     }
+    buildToolsVersion '34.0.0 rc2'
 }
 
 dependencies {
@@ -62,10 +64,10 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1") {
         exclude module: "protobuf-lite"
     }
-    kapt 'org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.6.0'
+//    kapt 'org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.6.0'
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    kapt  "com.google.dagger:hilt-android-compiler:$hilt_version"
     //mockk
     testImplementation "io.mockk:mockk:1.13.4"
     //splash

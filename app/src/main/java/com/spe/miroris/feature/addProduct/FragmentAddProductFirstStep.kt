@@ -31,7 +31,7 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
     AdapterView.OnItemSelectedListener {
 
     companion object {
-        const val OPEN_DIALOG_FRAGMENT_GALLERY_CAMERA_TAG = "select gallery or camera fragment"
+        private const val OPEN_DIALOG_FRAGMENT_GALLERY_CAMERA_TAG = "select gallery or camera fragment"
     }
 
     private val viewModel: AddProductFirstStepViewModel by viewModels()

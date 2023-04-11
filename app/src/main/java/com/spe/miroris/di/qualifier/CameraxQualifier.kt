@@ -2,22 +2,22 @@ package com.spe.miroris.di.qualifier
 
 import javax.inject.Qualifier
 
-@Retention(AnnotationRetention.BINARY)
+@Retention(AnnotationRetention.RUNTIME)
 @Qualifier
 annotation class LensFacingBack
 
-@Retention(AnnotationRetention.BINARY)
+@Retention(AnnotationRetention.RUNTIME)
 @Qualifier
 annotation class LensFacingFront
 
-@Retention(AnnotationRetention.BINARY)
+@Retention(AnnotationRetention.RUNTIME)
 @Qualifier
 annotation class CameraxOutputDirectory
 
-@Retention(AnnotationRetention.BINARY)
+@Retention(AnnotationRetention.RUNTIME)
 @Qualifier
 annotation class CameraxPhotoFile
 
-@Retention(AnnotationRetention.BINARY)
+@Retention(AnnotationRetention.RUNTIME)
 @Qualifier
 annotation class CameraxOutputOptions

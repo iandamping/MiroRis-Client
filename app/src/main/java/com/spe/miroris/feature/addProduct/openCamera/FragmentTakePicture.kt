@@ -25,7 +25,7 @@ import timber.log.Timber
 class FragmentTakePicture : BaseFragmentViewBinding<FragmentTakePictureBinding>() {
 
     companion object {
-        const val OPEN_DIALOG_FRAGMENT_TAG = "select photo from dialog"
+        private const val OPEN_DIALOG_FRAGMENT_TAG = "select photo from dialog"
     }
 
     private val cameraVm: CameraViewModel by viewModels()
