@@ -35,7 +35,24 @@
     <string name="switch_to_list">switch to list</string>
     <string name="right_chevron">right chevron</string>
     <string name="account">Account</string>
-
+    <string name="continue_add_product">Continue</string>
+    <string name="fund">Pendanaan</string>
+    <string name="fund_detail">Detail Pendanaan</string>
+    <string name="add_your_product_here">add your product here</string>
+    <string name="product_name">Nama Produk</string>
+    <string name="product_desc">Deskripsi Produk</string>
+    <string name="own_account">Rekening Sendiri</string>
+    <string name="produk_and_rekening"><![CDATA[Produk & Rekening]]></string>
+    <string name="product">Produk</string>
+    <string name="press_to_capture_image">press to capture image</string>
+    <string name="switch_to_front_camera">switch to front camera</string>
+    <string name="permission_not_granted">Permission request denied</string>
+    <string name="failed_focus_camera">Auto focus camera failed because %1$s</string>
+    <string name="failed_start_camera">Start camera failed because %1$s</string>
+    <string name="failed_to_get_image_from_gallery">Get image from gallery failed because %1$s</string>
+    <string name="image_from_camera">image from camera</string>
+    <string name="accept_image">Accept Image</string>
+    <string name="delete_image">delete image</string>
 
     <string-array name="default_bank_spinner">
         <item>BCA</item>
