@@ -13,7 +13,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class DialogSelectImage(private val uri: Uri) : DialogFragment() {
+class DialogSelectImage(private val uri: Uri, private val listener: DialogSelectImageCallback) :
+    DialogFragment() {
+
+    interface DialogSelectImageCallback {
+        fun deleteThisImage(uri: Uri)
+    }
 
     private var _binding: DialogSelectImageBinding? = null
     private val binding get() = _binding!!
@@ -37,14 +42,10 @@ class DialogSelectImage(private val uri: Uri) : DialogFragment() {
         binding.ivImage.load(uri)
 
         binding.ivImageSelect.setOnClickListener {
-//            setFragmentResult(
-//                "requestPictureKey",
-//                bundleOf("bundlePictureKey" to cameraVm.provideImageUri().toString())
-//            )
             dismiss()
         }
         binding.ivImageDelete.setOnClickListener {
-//            cameraVm.deletePhoto()
+            listener.deleteThisImage(uri)
             dismiss()
         }
     }

@@ -48,9 +48,27 @@ class AddProductFirstStepViewModel : ViewModel() {
                         this.removeAt(4)
                         this.add(data)
                     }
+                    this[5] == MultiAdapterData.Footer -> {
+                        this.removeAt(5)
+                    }
+                }
+
+            }
+        }
+    }
+
+    fun deleteMiniImageData(position: Int) {
+        _listMiniImageData.update {
+            _listMiniImageData.value.toMutableList().apply {
+                removeAt(position)
+                if (this.size == 4) {
+                    if (this[3] != MultiAdapterData.Footer) {
+                        add(4, MultiAdapterData.Footer)
+                    }
                 }
             }
         }
+
     }
 
 

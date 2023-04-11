@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.spe.miroris.R
 import com.spe.miroris.databinding.DialogSelectCameraOrGalleryBinding
+import com.spe.miroris.feature.addProduct.FragmentAddProductFirstStep.Companion.BACK_STACK_ENTRY_KEY
 
 class DialogSelectCameraOrGallery : DialogFragment() {
 
@@ -24,7 +25,6 @@ class DialogSelectCameraOrGallery : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        isCancelable = false
         _binding = DialogSelectCameraOrGalleryBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,14 +34,14 @@ class DialogSelectCameraOrGallery : DialogFragment() {
 
         binding.llSelectCamera.setOnClickListener {
             findNavController().previousBackStackEntry?.savedStateHandle?.set(
-                "key",
+                BACK_STACK_ENTRY_KEY,
                 CameraGalleryEnum.CAMERA.name
             )
             dismiss()
         }
         binding.llSelectGallery.setOnClickListener {
             findNavController().previousBackStackEntry?.savedStateHandle?.set(
-                "key",
+                BACK_STACK_ENTRY_KEY,
                 CameraGalleryEnum.GALLERY.name
             )
             dismiss()

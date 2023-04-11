@@ -36,9 +36,11 @@ private var PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.CAMERA)
 @AndroidEntryPoint
 class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFirstStepBinding>(),
     EpoxyAddProductImageController.EpoxyAddProductImageClickListener,
-    AdapterView.OnItemSelectedListener {
+    AdapterView.OnItemSelectedListener,
+    DialogSelectImage.DialogSelectImageCallback {
 
     companion object {
+        const val BACK_STACK_ENTRY_KEY = "key from DialogSelectCameraOrGallery"
         private const val OPEN_SELECT_IMAGE_DIALOG = "select photo from dialog"
         fun hasPermissions(context: Context) = PERMISSIONS_REQUIRED.all {
             ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
@@ -82,7 +84,7 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
     }
 
     override fun viewCreated() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("key")
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(BACK_STACK_ENTRY_KEY)
             ?.observe(
                 viewLifecycleOwner
             ) { result ->
@@ -143,7 +145,7 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
             }
             is MultiAdapterData.Main -> {
                 //open the selected image
-                val dialogFragment = DialogSelectImage(data.image)
+                val dialogFragment = DialogSelectImage(uri = data.image, listener = this)
                 dialogFragment.show(childFragmentManager, OPEN_SELECT_IMAGE_DIALOG)
             }
         }
@@ -192,4 +194,17 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
                 findNavController().navigate(FragmentAddProductFirstStepDirections.actionFragmentAddProductFirstStepToFragmentTakePicture())
             }
         }
+
+    override fun deleteThisImage(uri: Uri) {
+        consumeSuspend {
+            viewModel.listMiniImageData.collect { data ->
+                val position = data.indexOfFirst {
+                    if (it is MultiAdapterData.Main){
+                        it.image == uri
+                    } else false
+                }
+                viewModel.deleteMiniImageData(position)
+            }
+        }
+    }
 }
