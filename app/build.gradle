@@ -110,7 +110,7 @@ dependencies {
     //CameraX Lifecycle Library
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     //CameraX View class
-    implementation "androidx.camera:camera-view:1.1.0"
+    implementation "androidx.camera:camera-view:$camerax_version"
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
