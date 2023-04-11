@@ -46,7 +46,7 @@
     <string name="product">Produk</string>
     <string name="press_to_capture_image">press to capture image</string>
     <string name="switch_to_front_camera">switch to front camera</string>
-    <string name="permission_not_granted">Permissions are not granted!</string>
+    <string name="permission_not_granted">Permission request denied</string>
     <string name="failed_focus_camera">Auto focus camera failed because %1$s</string>
     <string name="failed_start_camera">Start camera failed because %1$s</string>
     <string name="failed_to_get_image_from_gallery">Get image from gallery failed because %1$s</string>

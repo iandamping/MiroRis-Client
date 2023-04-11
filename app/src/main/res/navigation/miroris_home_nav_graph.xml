@@ -39,11 +39,32 @@
         android:name="com.spe.miroris.feature.addProduct.FragmentAddProductFirstStep"
         android:label="FragmentAddProductFirstStep" >
         <action
+            android:id="@+id/action_fragmentAddProductFirstStep_to_dialogSelectCameraOrGallery"
+            app:destination="@id/dialogSelectCameraOrGallery" />
+        <argument
+            android:name="passedUri"
+            app:argType="string"
+            app:nullable="true" />
+        <action
             android:id="@+id/action_fragmentAddProductFirstStep_to_fragmentTakePicture"
             app:destination="@id/fragmentTakePicture" />
     </fragment>
     <fragment
         android:id="@+id/fragmentTakePicture"
         android:name="com.spe.miroris.feature.addProduct.openCamera.FragmentTakePicture"
-        android:label="FragmentTakePicture" />
+        android:label="FragmentTakePicture" >
+        <action
+            android:id="@+id/action_fragmentTakePicture_to_fragmentAddProductFirstStep"
+            app:destination="@id/fragmentAddProductFirstStep"
+            app:popUpTo="@id/fragmentAddProductFirstStep"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <dialog
+        android:id="@+id/dialogSelectCameraOrGallery"
+        android:name="com.spe.miroris.feature.addProduct.openCamera.DialogSelectCameraOrGallery"
+        android:label="DialogSelectCameraOrGallery" >
+        <action
+            android:id="@+id/action_dialogSelectCameraOrGallery_to_fragmentTakePicture"
+            app:destination="@id/fragmentTakePicture" />
+    </dialog>
 </navigation>

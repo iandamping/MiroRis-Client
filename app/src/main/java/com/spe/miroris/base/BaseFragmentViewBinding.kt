@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -33,6 +34,17 @@ abstract class BaseFragmentViewBinding<out VB : ViewBinding> : Fragment() {
                 func.invoke(this)
             }
         }
+    }
+
+    protected fun overrideFragmentBackPressed(func: () -> Unit) {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() { // Handle the back button event
+                    func.invoke()
+                }
+            }
+        )
     }
 
     abstract fun initView()

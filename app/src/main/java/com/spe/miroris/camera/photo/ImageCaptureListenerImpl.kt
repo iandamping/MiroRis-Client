@@ -10,7 +10,6 @@ class ImageCaptureListenerImpl @Inject constructor() :
     ImageCaptureListener {
 
     companion object CameraConstant {
-        private const val SUCCESS_CAPTURE_IMAGE = "Photo capture success"
         private const val FAILED_CAPTURE_IMAGE = "Photo capture failed :"
     }
 
@@ -23,8 +22,9 @@ class ImageCaptureListenerImpl @Inject constructor() :
     override fun providePhotoListener(): ImageCapture.OnImageSavedCallback {
         return object : ImageCapture.OnImageSavedCallback {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                val savedUri = outputFileResults.savedUri
                 _imageState.update { state ->
-                    state.copy(successMessage = SUCCESS_CAPTURE_IMAGE)
+                    state.copy(successMessage = savedUri?.toString() ?: FAILED_CAPTURE_IMAGE)
                 }
             }
 

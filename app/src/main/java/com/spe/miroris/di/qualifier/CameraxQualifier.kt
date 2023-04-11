@@ -12,11 +12,7 @@ annotation class LensFacingFront
 
 @Retention(AnnotationRetention.RUNTIME)
 @Qualifier
-annotation class CameraxOutputDirectory
-
-@Retention(AnnotationRetention.RUNTIME)
-@Qualifier
-annotation class CameraxPhotoFile
+annotation class CameraxContentValues
 
 @Retention(AnnotationRetention.RUNTIME)
 @Qualifier

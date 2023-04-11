@@ -1,7 +1,5 @@
 package com.spe.miroris.camera.helper
 
-import android.content.Context
-import android.media.MediaScannerConnection
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
@@ -10,11 +8,9 @@ import com.google.common.util.concurrent.ListenableFuture
 import com.spe.miroris.camera.afterMeasured
 import com.spe.miroris.camera.photo.ImageCaptureListener
 import com.spe.miroris.di.qualifier.CameraxOutputOptions
-import com.spe.miroris.di.qualifier.CameraxPhotoFile
 import com.spe.miroris.di.qualifier.LensFacingBack
 import com.spe.miroris.di.qualifier.LensFacingFront
-import dagger.hilt.android.qualifiers.ApplicationContext
-import java.io.File
+import java.util.*
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.TimeUnit
@@ -22,7 +18,6 @@ import javax.inject.Inject
 
 
 class CameraxHelperImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
     private val cameraExecutor: ExecutorService,
     private val cameraMainExecutor: Executor,
     private val cameraFuture: ListenableFuture<ProcessCameraProvider>,
@@ -30,7 +25,6 @@ class CameraxHelperImpl @Inject constructor(
     @LensFacingBack private val backCameraSelector: CameraSelector,
     @LensFacingFront private val frontCameraSelector: CameraSelector,
     @CameraxOutputOptions private val outputOptions: ImageCapture.OutputFileOptions,
-    @CameraxPhotoFile private val photoFile: File,
     private val imageCaptureListener: ImageCaptureListener,
     private val imageCapture: ImageCapture,
 ) : CameraxHelper {
@@ -126,10 +120,4 @@ class CameraxHelperImpl @Inject constructor(
         cameraExecutor.shutdown()
     }
 
-    override fun deletePhoto() {
-        photoFile.delete()
-        MediaScannerConnection.scanFile(
-            context.applicationContext, arrayOf(photoFile.absolutePath), null, null
-        )
-    }
 }

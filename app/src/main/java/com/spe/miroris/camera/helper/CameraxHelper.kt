@@ -44,5 +44,4 @@ interface CameraxHelper {
 
     fun shutdownExecutor()
 
-    fun deletePhoto()
 }

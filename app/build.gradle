@@ -10,10 +10,11 @@ plugins {
 android {
     namespace 'com.spe.miroris'
     compileSdk 33
+    buildToolsVersion '34.0.0 rc2'
 
     defaultConfig {
         applicationId "com.spe.miroris"
-        minSdk 24
+        minSdk 21
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -49,31 +50,37 @@ android {
         viewBinding true
         dataBinding true
     }
-    buildToolsVersion '34.0.0 rc2'
+    testOptions.unitTests {
+        returnDefaultValues = true
+    }
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+//    implementation 'androidx.core:core-ktx:1.9.0'
+//    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.test.espresso:espresso-idling-resource:3.5.1'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+    androidTestImplementation "androidx.arch.core:core-testing:2.2.0"
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test:rules:1.5.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.1'
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1") {
         exclude module: "protobuf-lite"
     }
-//    kapt 'org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.6.0'
-    //hilt
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt  "com.google.dagger:hilt-android-compiler:$hilt_version"
-    //mockk
-    testImplementation "io.mockk:mockk:1.13.4"
-    //splash
-    implementation 'androidx.core:core-splashscreen:1.0.0'
-    //log
-    implementation "com.jakewharton.timber:timber:$timber_version"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    //fragment test
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
+    //logger
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+    //fragment
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
     //retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     // Retrofit with Moshi Converter
@@ -85,31 +92,42 @@ dependencies {
     // define any required OkHttp artifacts without version
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
-    // Coil
-    implementation 'io.coil-kt:coil:2.3.0'
     //coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"
+    //mockk
+    testImplementation "io.mockk:mockk:1.13.4"
     //navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
     androidTestImplementation "androidx.navigation:navigation-testing:$navigation_version"
     //navigation test
     androidTestImplementation "androidx.navigation:navigation-testing:$navigation_version"
-    //datastore
-    implementation "androidx.datastore:datastore-preferences:1.0.0"
-    //epoxy
-    implementation "com.airbnb.android:epoxy:5.1.2"
-    // Add the annotation processor if you are using Epoxy's annotations (recommended)
-    kapt "com.airbnb.android:epoxy-processor:5.1.2"
-    // Splash screen
-    implementation 'androidx.core:core-splashscreen:1.0.0'
     //CameraX core library using camera2 implementation
     implementation "androidx.camera:camera-camera2:$camerax_version"
     //CameraX Lifecycle Library
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     //CameraX View class
-    implementation "androidx.camera:camera-view:$camerax_version"
+    implementation "androidx.camera:camera-view:1.1.0"
+    //hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    //Hilt - Instrumented testing
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+    androidTestAnnotationProcessor "com.google.dagger:hilt-android-compiler:$hilt_version"
+    //epoxy
+    implementation "com.airbnb.android:epoxy:5.1.1"
+    // Add the annotation processor if you are using Epoxy's annotations (recommended)
+    kapt "com.airbnb.android:epoxy-processor:5.1.1"
+    // Coil
+    implementation "io.coil-kt:coil:2.1.0"
+    //splash
+    implementation 'androidx.core:core-splashscreen:1.0.0'
+    //lottie
+    implementation 'com.airbnb.android:lottie:4.1.0'
+    //datastore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 }

@@ -1,6 +1,5 @@
 package com.spe.miroris.feature.addProduct.openCamera
 
-import android.net.Uri
 import androidx.camera.core.Camera
 import androidx.camera.core.Preview
 import androidx.camera.view.PreviewView
@@ -10,15 +9,12 @@ import androidx.lifecycle.viewModelScope
 import com.spe.miroris.camera.helper.CameraxHelper
 import com.spe.miroris.camera.photo.ImageCaptureListener
 import com.spe.miroris.camera.state.ImageCaptureState
-import com.spe.miroris.di.qualifier.CameraxPhotoFile
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
-import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class CameraViewModel @Inject constructor(
-    @CameraxPhotoFile private val photoFile: File,
     private val cameraxHelper: CameraxHelper,
     private val imageCaptureListener: ImageCaptureListener
 ) : ViewModel() {
@@ -50,18 +46,14 @@ class CameraViewModel @Inject constructor(
 
     fun takePhoto() = cameraxHelper.takePhoto()
 
-    fun deletePhoto() = cameraxHelper.deletePhoto()
-
     fun providePreview(view: PreviewView) = cameraxHelper.providePreview(view)
 
     fun autoFocusPreview(view: PreviewView, camera: Camera) =
         cameraxHelper.autoFocusPreview(view, camera)
 
-    fun provideImageFile(): File = photoFile
-
-    fun provideImageUri(): Uri = Uri.fromFile(photoFile)
-
     fun resetImageCaptureState() = imageCaptureListener.resetState()
+
+    fun shutdownExecutor() = cameraxHelper.shutdownExecutor()
 
     fun startCamera(
         lifecycleOwner: LifecycleOwner,

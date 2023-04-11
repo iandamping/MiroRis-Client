@@ -1,6 +1,11 @@
 package com.spe.miroris.feature.addProduct
 
+import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +15,10 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.setFragmentResultListener
-import androidx.fragment.app.viewModels
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.material.snackbar.Snackbar
 import com.spe.miroris.R
@@ -21,9 +27,11 @@ import com.spe.miroris.databinding.FragmentAddProductFirstStepBinding
 import com.spe.miroris.feature.addProduct.adapter.EpoxyAddProductImageController
 import com.spe.miroris.feature.addProduct.adapter.MultiAdapterData
 import com.spe.miroris.feature.addProduct.openCamera.CameraGalleryEnum
-import com.spe.miroris.feature.addProduct.openCamera.DialogSelectCameraOrGallery
+import com.spe.miroris.feature.addProduct.openCamera.DialogSelectCameraOrGalleryDirections
+import com.spe.miroris.feature.addProduct.openCamera.DialogSelectImage
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
+
+private var PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.CAMERA)
 
 @AndroidEntryPoint
 class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFirstStepBinding>(),
@@ -31,10 +39,15 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
     AdapterView.OnItemSelectedListener {
 
     companion object {
-        private const val OPEN_DIALOG_FRAGMENT_GALLERY_CAMERA_TAG = "select gallery or camera fragment"
+        private const val OPEN_SELECT_IMAGE_DIALOG = "select photo from dialog"
+        fun hasPermissions(context: Context) = PERMISSIONS_REQUIRED.all {
+            ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+        }
     }
 
-    private val viewModel: AddProductFirstStepViewModel by viewModels()
+    private val args: FragmentAddProductFirstStepArgs by navArgs()
+
+    private val viewModel: AddProductFirstStepViewModel by activityViewModels()
 
     private lateinit var epoxyAddProductImageController: EpoxyAddProductImageController
 
@@ -43,21 +56,12 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Use the Kotlin extension in the fragment-ktx artifact
-        setFragmentResultListener("requestKey") { _, bundle ->
-            // We use a String here, but any type that can be put in a Bundle is supported
-            when (bundle.getString("bundleKey")) {
-                CameraGalleryEnum.CAMERA.name -> {
-                    findNavController().navigate(FragmentAddProductFirstStepDirections.actionFragmentAddProductFirstStepToFragmentTakePicture())
-                }
-                CameraGalleryEnum.GALLERY.name -> {
-                    val intent = Intent(Intent.ACTION_PICK)
-                    intent.type = "image/*"
-                    intentGalleryLauncher.launch(intent)
-                }
-            }
+        // add the storage access permission request for Android 9 and below.
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            val permissionList = PERMISSIONS_REQUIRED.toMutableList()
+            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            PERMISSIONS_REQUIRED = permissionList.toTypedArray()
         }
-
     }
 
     override fun initView() {
@@ -78,6 +82,33 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
     }
 
     override fun viewCreated() {
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("key")
+            ?.observe(
+                viewLifecycleOwner
+            ) { result ->
+                // Do something with the result.
+                when (result) {
+                    CameraGalleryEnum.CAMERA.name -> {
+                        if (!hasPermissions(requireContext())) {
+                            // Request camera-related permissions
+                            activityResultLauncher.launch(PERMISSIONS_REQUIRED)
+                        } else {
+                            findNavController().navigate(DialogSelectCameraOrGalleryDirections.actionDialogSelectCameraOrGalleryToFragmentTakePicture())
+                        }
+                    }
+                    CameraGalleryEnum.GALLERY.name -> {
+                        val intent = Intent(Intent.ACTION_PICK)
+                        intent.type = "image/*"
+                        intentGalleryLauncher.launch(intent)
+                    }
+                }
+            }
+        if (!args.passedUri.isNullOrEmpty()) {
+            viewModel.setMiniImageData(MultiAdapterData.Main(Uri.parse(args.passedUri)))
+            arguments?.clear()
+        }
+
+
         with(binding.rvMiniAddProduct) {
             setController(epoxyAddProductImageController)
             LinearSnapHelper().attachToRecyclerView(this)
@@ -85,11 +116,13 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
         binding.swOwnAccount.setOnCheckedChangeListener { buttonView, isChecked ->
             // Responds to switch being checked/unchecked
         }
+
         consumeSuspend {
             viewModel.listMiniImageData.collect { data ->
                 epoxyAddProductImageController.setData(data)
             }
         }
+
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
@@ -106,21 +139,18 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
         when (data) {
             MultiAdapterData.Footer -> {
                 //open gallery or camera
-                Timber.e("open camera")
                 showDialogSelectCameraOrGallery()
-//                viewModel.setMiniImageData(MultiAdapterData.Main(Uri.EMPTY))
             }
             is MultiAdapterData.Main -> {
                 //open the selected image
-                Timber.e("select the image")
-
+                val dialogFragment = DialogSelectImage(data.image)
+                dialogFragment.show(childFragmentManager, OPEN_SELECT_IMAGE_DIALOG)
             }
         }
     }
 
     private fun showDialogSelectCameraOrGallery() {
-        val dialogFragment = DialogSelectCameraOrGallery()
-        dialogFragment.show(childFragmentManager, OPEN_DIALOG_FRAGMENT_GALLERY_CAMERA_TAG)
+        findNavController().navigate(FragmentAddProductFirstStepDirections.actionFragmentAddProductFirstStepToDialogSelectCameraOrGallery())
     }
 
 
@@ -141,4 +171,25 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
             }
         }
     }
+
+    private val activityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions())
+        { permissions ->
+            // Handle Permission granted/rejected
+            var permissionGranted = true
+            permissions.entries.forEach {
+                if (it.key in PERMISSIONS_REQUIRED && !it.value)
+                    permissionGranted = false
+            }
+            if (!permissionGranted) {
+                Snackbar.make(
+                    requireContext(),
+                    binding.root,
+                    getString(R.string.permission_not_granted),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            } else {
+                findNavController().navigate(FragmentAddProductFirstStepDirections.actionFragmentAddProductFirstStepToFragmentTakePicture())
+            }
+        }
 }

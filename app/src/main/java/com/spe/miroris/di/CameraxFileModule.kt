@@ -1,17 +1,17 @@
 package com.spe.miroris.di
 
+import android.content.ContentValues
 import android.content.Context
+import android.os.Build
+import android.provider.MediaStore
 import androidx.camera.core.ImageCapture
-import com.spe.miroris.R
-import com.spe.miroris.di.qualifier.CameraxOutputDirectory
+import com.spe.miroris.di.qualifier.CameraxContentValues
 import com.spe.miroris.di.qualifier.CameraxOutputOptions
-import com.spe.miroris.di.qualifier.CameraxPhotoFile
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Singleton
@@ -29,30 +29,36 @@ object CameraxFileModule {
 
     @Provides
     @Singleton
-    @CameraxOutputDirectory
-    fun provideOutputDirectory(@ApplicationContext context: Context): File {
-        val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
-            File(it, context.resources.getString(R.string.app_name)).apply { mkdirs() }
-        }
-        return if (mediaDir != null && mediaDir.exists())
-            mediaDir else context.filesDir
-    }
+    @CameraxContentValues
+    fun provideContentValues(): ContentValues {
+        // Create time stamped name and MediaStore entry.
+        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
+            .format(System.currentTimeMillis())
 
-    @Provides
-    @Singleton
-    @CameraxPhotoFile
-    fun providePhotoFile(@CameraxOutputDirectory outputDirectory: File): File {
-        return File(
-            outputDirectory,
-            SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis()) + ".jpg"
-        )
+        return ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraX-Image")
+            }
+        }
     }
 
     @Provides
     @Singleton
     @CameraxOutputOptions
-    fun provideOutputOption(@CameraxPhotoFile photoFile: File): ImageCapture.OutputFileOptions {
-        return ImageCapture.OutputFileOptions.Builder(photoFile).build()
+    fun provideOutputOption(
+        @ApplicationContext context: Context,
+        @CameraxContentValues contentValues: ContentValues
+    ): ImageCapture.OutputFileOptions {
+        // Create output options object which contains file + metadata
+        return ImageCapture.OutputFileOptions
+            .Builder(
+                context.contentResolver,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                contentValues
+            )
+            .build()
     }
 
 }
