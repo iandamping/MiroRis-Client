@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.material.snackbar.Snackbar
 import com.spe.miroris.R
@@ -46,8 +45,6 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
             ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
         }
     }
-
-    private val args: FragmentAddProductFirstStepArgs by navArgs()
 
     private val viewModel: AddProductFirstStepViewModel by activityViewModels()
 
@@ -84,7 +81,9 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
     }
 
     override fun viewCreated() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(BACK_STACK_ENTRY_KEY)
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
+            BACK_STACK_ENTRY_KEY
+        )
             ?.observe(
                 viewLifecycleOwner
             ) { result ->
@@ -105,10 +104,6 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
                     }
                 }
             }
-        if (!args.passedUri.isNullOrEmpty()) {
-            viewModel.setMiniImageData(MultiAdapterData.Main(Uri.parse(args.passedUri)))
-            arguments?.clear()
-        }
 
 
         with(binding.rvMiniAddProduct) {
@@ -117,6 +112,10 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
         }
         binding.swOwnAccount.setOnCheckedChangeListener { buttonView, isChecked ->
             // Responds to switch being checked/unchecked
+        }
+        binding.btnContinue.setOnClickListener {
+            //we will check this later
+            findNavController().navigate(FragmentAddProductFirstStepDirections.actionFragmentAddProductFirstStepToFragmentAddProductSecondStep())
         }
 
         consumeSuspend {
@@ -199,7 +198,7 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
         consumeSuspend {
             viewModel.listMiniImageData.collect { data ->
                 val position = data.indexOfFirst {
-                    if (it is MultiAdapterData.Main){
+                    if (it is MultiAdapterData.Main) {
                         it.image == uri
                     } else false
                 }

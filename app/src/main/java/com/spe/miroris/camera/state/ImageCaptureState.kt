@@ -4,18 +4,18 @@ import javax.annotation.concurrent.Immutable
 
 @Immutable
 data class ImageCaptureState(
-    val successMessage: String,
+    val successUri: String,
     val failedMessage: String
 ) {
 
     companion object {
         fun initial() = ImageCaptureState(
-            successMessage = "",
+            successUri = "",
             failedMessage = "",
         )
     }
 
     override fun toString(): String {
-        return "successMessage: $successMessage, failed message : $failedMessage"
+        return "successMessage: $successUri, failed message : $failedMessage"
     }
 }

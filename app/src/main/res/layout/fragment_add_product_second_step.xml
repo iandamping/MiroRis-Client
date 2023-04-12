@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/shapeableImageView2"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/img_round_background_orange"
+                android:gravity="center_vertical|center_horizontal"
+                android:src="@drawable/baseline_check_white_24"
+                app:layout_constraintBottom_toTopOf="@+id/textView18"
+                app:layout_constraintEnd_toStartOf="@+id/guideline57"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/guideline57"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/product"
+                android:textColor="@color/black"
+                android:textSize="@dimen/letter_medium"
+                app:layout_constraintBottom_toTopOf="@+id/textView19"
+                app:layout_constraintEnd_toStartOf="@+id/guideline57"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/guideline57"
+                app:layout_constraintTop_toBottomOf="@+id/shapeableImageView2" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/produk_and_rekening"
+                app:layout_constraintBottom_toTopOf="@+id/guideline59"
+                app:layout_constraintEnd_toStartOf="@+id/guideline57"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/guideline57"
+                app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+
+            <View
+                android:id="@+id/view5"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/default_gray"
+                app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView2"
+                app:layout_constraintEnd_toStartOf="@+id/textView17"
+                app:layout_constraintStart_toEndOf="@+id/shapeableImageView2"
+                app:layout_constraintTop_toTopOf="@+id/shapeableImageView2" />
+
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/txt_round_background_blue"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="2"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/textView20"
+                app:layout_constraintEnd_toStartOf="@+id/guideline58"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/guideline58"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fund"
+                android:textColor="@color/black"
+                android:textSize="@dimen/letter_medium"
+                app:layout_constraintBottom_toTopOf="@+id/textView21"
+                app:layout_constraintEnd_toStartOf="@+id/guideline58"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/guideline58"
+                app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fund_detail"
+                app:layout_constraintBottom_toTopOf="@+id/guideline59"
+                app:layout_constraintEnd_toStartOf="@+id/guideline58"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/guideline58"
+                app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Jenis Pendanaan"
+                android:textSize="@dimen/letter_xsmall"
+                app:layout_constraintStart_toStartOf="@+id/guideline54"
+                app:layout_constraintTop_toTopOf="@+id/guideline59" />
+
+            <Spinner
+                android:id="@+id/spFundSelection"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:contentDescription="Fund Spinner"
+                app:layout_constraintEnd_toStartOf="@+id/guideline55"
+                app:layout_constraintStart_toStartOf="@+id/guideline54"
+                app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Type Pendanaan"
+                android:textSize="@dimen/letter_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/textView24"
+                app:layout_constraintStart_toStartOf="@+id/guideline54"
+                app:layout_constraintTop_toBottomOf="@+id/spFundSelection" />
+
+            <Spinner
+                android:id="@+id/spFundTypeSelection"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:contentDescription="Fund Type Spinner"
+                app:layout_constraintEnd_toStartOf="@+id/guideline60"
+                app:layout_constraintStart_toStartOf="@+id/guideline54"
+                app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Durasi Pendanaan"
+                android:textSize="@dimen/letter_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/guideline55"
+                app:layout_constraintStart_toStartOf="@+id/guideline60"
+                app:layout_constraintTop_toBottomOf="@+id/spFundSelection" />
+
+            <Spinner
+                android:id="@+id/spFundDurationSelection"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:contentDescription="Fund Duration Spinner"
+                app:layout_constraintEnd_toStartOf="@+id/guideline55"
+                app:layout_constraintStart_toEndOf="@+id/spFundTypeSelection"
+                app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Tanggal Mulai Pendanaan"
+                android:textSize="@dimen/letter_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/guideline55"
+                app:layout_constraintStart_toStartOf="@+id/guideline54"
+                app:layout_constraintTop_toBottomOf="@+id/spFundTypeSelection" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputStartDateFundLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:endIconDrawable="@drawable/baseline_calendar_today_24"
+                app:endIconMode="custom"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@null"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toStartOf="@+id/guideline55"
+                app:layout_constraintStart_toStartOf="@+id/guideline54"
+                app:layout_constraintTop_toBottomOf="@+id/textView26">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputStartDateFund"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="2023-12-01"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:singleLine="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Tanggal Berakhir Pendanaan"
+                android:textSize="@dimen/letter_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/guideline55"
+                app:layout_constraintStart_toStartOf="@+id/guideline54"
+                app:layout_constraintTop_toBottomOf="@+id/textInputStartDateFundLayout" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputEndDateFundLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:endIconDrawable="@drawable/baseline_calendar_today_24"
+                app:endIconMode="custom"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@null"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toStartOf="@+id/guideline55"
+                app:layout_constraintStart_toStartOf="@+id/guideline54"
+                app:layout_constraintTop_toBottomOf="@+id/textView27">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEndDateFund"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="2023-12-01"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:singleLine="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/swProductStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:checked="true"
+                android:gravity="center"
+                android:text="Status Produk"
+                app:layout_constraintBottom_toTopOf="@+id/btnSave"
+                app:layout_constraintStart_toStartOf="@+id/guideline54"
+                app:layout_constraintTop_toBottomOf="@+id/textInputEndDateFundLayout"
+                app:layout_constraintVertical_chainStyle="spread_inside" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSave"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/save"
+                android:text="@string/save"
+                app:cornerRadius="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline55"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/guideline54"
+                app:layout_constraintTop_toBottomOf="@+id/swProductStatus"
+                app:rippleColor="@color/purple_700" />
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline54"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline55"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline56"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.95" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline57"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.3" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline58"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.7" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline59"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.2" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline60"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline61"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="20dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</layout>

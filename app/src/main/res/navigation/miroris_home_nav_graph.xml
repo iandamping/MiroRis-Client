@@ -6,8 +6,7 @@
 
     <fragment
         android:id="@+id/fragmentHome"
-        android:name="com.spe.miroris.feature.FragmentHome"
-        android:label="FragmentHome" >
+        android:name="com.spe.miroris.feature.FragmentHome">
         <action
             android:id="@+id/action_fragmentHome_to_dialogFragmentFilter"
             app:destination="@id/dialogFragmentFilter" />
@@ -37,17 +36,16 @@
     <fragment
         android:id="@+id/fragmentAddProductFirstStep"
         android:name="com.spe.miroris.feature.addProduct.FragmentAddProductFirstStep"
-        android:label="FragmentAddProductFirstStep" >
+        android:label="FragmentAddProductFirstStep">
         <action
             android:id="@+id/action_fragmentAddProductFirstStep_to_dialogSelectCameraOrGallery"
             app:destination="@id/dialogSelectCameraOrGallery" />
-        <argument
-            android:name="passedUri"
-            app:argType="string"
-            app:nullable="true" />
         <action
             android:id="@+id/action_fragmentAddProductFirstStep_to_fragmentTakePicture"
             app:destination="@id/fragmentTakePicture" />
+        <action
+            android:id="@+id/action_fragmentAddProductFirstStep_to_fragmentAddProductSecondStep"
+            app:destination="@id/fragmentAddProductSecondStep" />
     </fragment>
     <fragment
         android:id="@+id/fragmentTakePicture"
@@ -67,4 +65,8 @@
             android:id="@+id/action_dialogSelectCameraOrGallery_to_fragmentTakePicture"
             app:destination="@id/fragmentTakePicture" />
     </dialog>
+    <fragment
+        android:id="@+id/fragmentAddProductSecondStep"
+        android:name="com.spe.miroris.feature.addProduct.FragmentAddProductSecondStep"
+        android:label="FragmentAddProductSecondStep" />
 </navigation>
