@@ -171,31 +171,35 @@
 
 
             <TextView
+                android:id="@+id/textView16"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/data_rekening"
                 android:textColor="@color/black"
                 android:textSize="@dimen/letter_xlarge"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textView2"
+                app:layout_constraintBottom_toTopOf="@+id/swOwnAccount"
                 app:layout_constraintStart_toStartOf="@+id/guideline45"
-                app:layout_constraintTop_toTopOf="@+id/guideline53" />
+                app:layout_constraintTop_toBottomOf="@+id/textInputProductDescLayout" />
 
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/swOwnAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:checked="true"
                 android:gravity="center"
                 android:text="@string/own_account"
-                app:layout_constraintEnd_toStartOf="@+id/guideline46"
-                app:layout_constraintTop_toTopOf="@+id/guideline53" />
+                app:layout_constraintBottom_toTopOf="@+id/textView2"
+                app:layout_constraintStart_toStartOf="@+id/guideline45"
+                app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="@string/bank"
                 android:textSize="@dimen/letter_xsmall"
                 app:layout_constraintBottom_toTopOf="@+id/spBankSelection"
@@ -211,6 +215,7 @@
                 android:contentDescription="@string/bank_spinner"
                 app:layout_constraintBottom_toTopOf="@+id/textInputProductAccountNumberLayout"
                 app:layout_constraintEnd_toStartOf="@+id/guideline46"
+
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/guideline45"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -220,13 +225,14 @@
                 android:id="@+id/textInputProductAccountNumberLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:background="@android:color/transparent"
                 app:boxBackgroundColor="@android:color/transparent"
                 app:endIconDrawable="@drawable/baseline_search_24"
                 app:endIconMode="custom"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@null"
-                app:layout_constraintBottom_toTopOf="@+id/btnDownload"
+                app:layout_constraintBottom_toTopOf="@+id/btnContinue"
                 app:layout_constraintEnd_toStartOf="@+id/guideline46"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/guideline45"
@@ -246,9 +252,10 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnDownload"
+                android:id="@+id/btnContinue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:contentDescription="@string/continue_add_product"
                 android:text="@string/continue_add_product"
                 app:cornerRadius="8dp"

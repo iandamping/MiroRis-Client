@@ -2,17 +2,21 @@ package com.spe.miroris.feature.addProduct.openCamera
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.camera.core.CameraInfoUnavailableException
 import androidx.camera.core.CameraSelector
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.spe.miroris.R
 import com.spe.miroris.base.BaseFragmentViewBinding
 import com.spe.miroris.databinding.FragmentTakePictureBinding
+import com.spe.miroris.feature.addProduct.AddProductFirstStepViewModel
+import com.spe.miroris.feature.addProduct.adapter.MultiAdapterData
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -26,6 +30,8 @@ class FragmentTakePicture : BaseFragmentViewBinding<FragmentTakePictureBinding>(
     }
 
     private val cameraVm: CameraViewModel by viewModels()
+
+    private val addProductVm: AddProductFirstStepViewModel by activityViewModels()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTakePictureBinding
         get() = FragmentTakePictureBinding::inflate
@@ -62,9 +68,7 @@ class FragmentTakePicture : BaseFragmentViewBinding<FragmentTakePictureBinding>(
     private fun backPress() {
         overrideFragmentBackPressed {
             findNavController().navigate(
-                FragmentTakePictureDirections.actionFragmentTakePictureToFragmentAddProductFirstStep(
-                    null
-                )
+                FragmentTakePictureDirections.actionFragmentTakePictureToFragmentAddProductFirstStep()
             )
         }
     }
@@ -81,14 +85,12 @@ class FragmentTakePicture : BaseFragmentViewBinding<FragmentTakePictureBinding>(
                             Snackbar.LENGTH_SHORT
                         ).show()
                     }
-                    it.successMessage.isNotEmpty() || it.successMessage == FAILED_CAPTURE_IMAGE -> {
+                    it.successUri.isNotEmpty() || it.successUri == FAILED_CAPTURE_IMAGE -> {
                         cameraVm.resetImageCaptureState()
+                        addProductVm.setMiniImageData(MultiAdapterData.Main(Uri.parse(it.successUri)))
                         findNavController().navigate(
-                            FragmentTakePictureDirections.actionFragmentTakePictureToFragmentAddProductFirstStep(
-                                it.successMessage
-                            )
+                            FragmentTakePictureDirections.actionFragmentTakePictureToFragmentAddProductFirstStep()
                         )
-
                     }
                 }
             }

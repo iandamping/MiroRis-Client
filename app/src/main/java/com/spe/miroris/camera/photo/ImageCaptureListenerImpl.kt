@@ -24,7 +24,7 @@ class ImageCaptureListenerImpl @Inject constructor() :
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                 val savedUri = outputFileResults.savedUri
                 _imageState.update { state ->
-                    state.copy(successMessage = savedUri?.toString() ?: FAILED_CAPTURE_IMAGE)
+                    state.copy(successUri = savedUri?.toString() ?: FAILED_CAPTURE_IMAGE)
                 }
             }
 
@@ -41,7 +41,7 @@ class ImageCaptureListenerImpl @Inject constructor() :
 
     override fun resetState() {
         _imageState.update { state ->
-            state.copy(successMessage = "", failedMessage = "")
+            state.copy(successUri = "", failedMessage = "")
         }
     }
 }
