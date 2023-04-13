@@ -53,6 +53,7 @@
     <string name="image_from_camera">image from camera</string>
     <string name="accept_image">Accept Image</string>
     <string name="delete_image">delete image</string>
+    <string name="tab_to_manage_product">Tab to manage product</string>
 
     <string-array name="default_bank_spinner">
         <item>BCA</item>

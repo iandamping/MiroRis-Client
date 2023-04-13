@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_fragmentHome_to_fragmentAddProductFirstStep"
             app:destination="@id/fragmentAddProductFirstStep" />
+        <action
+            android:id="@+id/action_fragmentHome_to_fragmentProductManagement"
+            app:destination="@id/fragmentProductManagement" />
     </fragment>
     <dialog
         android:id="@+id/dialogFragmentFilter"
@@ -69,4 +72,8 @@
         android:id="@+id/fragmentAddProductSecondStep"
         android:name="com.spe.miroris.feature.addProduct.FragmentAddProductSecondStep"
         android:label="FragmentAddProductSecondStep" />
+    <fragment
+        android:id="@+id/fragmentProductManagement"
+        android:name="com.spe.miroris.feature.productManagement.controller.FragmentProductManagement"
+        android:label="FragmentProductManagement" />
 </navigation>
