@@ -30,4 +30,5 @@
     <color name="grey_divider">#b6b6b6</color>
     <color name="dark_orange">#EA4F31</color>
     <color name="default_gray">#828282</color>
+    <color name="shimmer_gray">#DDDDDD</color>
 </resources>

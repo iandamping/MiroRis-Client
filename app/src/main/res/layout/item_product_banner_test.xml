@@ -6,25 +6,6 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/spacing_medium">
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:visibility="invisible"
-        android:id="@+id/shimmerProductBanner"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/shimmer_gray"
-            android:contentDescription="@string/item_product_banner" />
-
-
-    </com.facebook.shimmer.ShimmerFrameLayout>
-
     <ImageView
         android:id="@+id/ivItemProductBanner"
         android:layout_width="00dp"
