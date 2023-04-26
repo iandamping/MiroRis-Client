@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -27,13 +26,13 @@ class MainActivity : AppCompatActivity() {
         binding.toolbarHome.setupWithNavController(navController, appBarConfiguration)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if(destination.id != R.id.fragmentHome) {
-                binding.toolbarHome.visibility = View.VISIBLE
-            } else {
-                binding.toolbarHome.visibility = View.GONE
+            when (destination.id) {
+                R.id.fragmentHome -> binding.toolbarHome.visibility = View.GONE
+                R.id.fragmentTakePicture -> binding.toolbarHome.visibility = View.GONE
+                else -> {
+                    binding.toolbarHome.visibility = View.VISIBLE
+                }
             }
         }
-
-
     }
 }

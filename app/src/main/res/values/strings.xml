@@ -56,6 +56,9 @@
     <string name="tab_to_manage_product">Tab to manage product</string>
     <string name="starting_fund">Mulai Pendanaan</string>
     <string name="ending_fund">Berakhir Pendanaan</string>
+    <string name="close_the_dialog">close the dialog</string>
+    <string name="person_that_warn_you">person that warn you</string>
+    <string name="ok">OK</string>
 
     <string-array name="default_bank_spinner">
         <item>BCA</item>
