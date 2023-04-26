@@ -54,6 +54,8 @@
     <string name="accept_image">Accept Image</string>
     <string name="delete_image">delete image</string>
     <string name="tab_to_manage_product">Tab to manage product</string>
+    <string name="starting_fund">Mulai Pendanaan</string>
+    <string name="ending_fund">Berakhir Pendanaan</string>
 
     <string-array name="default_bank_spinner">
         <item>BCA</item>

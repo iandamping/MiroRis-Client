@@ -19,6 +19,12 @@
         <action
             android:id="@+id/action_fragmentHome_to_fragmentProductManagement"
             app:destination="@id/fragmentProductManagement" />
+        <action
+            android:id="@+id/action_fragmentHome_to_fragmentFundManagement"
+            app:destination="@id/fragmentFundManagement" />
+        <action
+            android:id="@+id/action_fragmentHome_to_fragmentInvestmentManagement"
+            app:destination="@id/fragmentInvestmentManagement" />
     </fragment>
     <dialog
         android:id="@+id/dialogFragmentFilter"
@@ -76,4 +82,12 @@
         android:id="@+id/fragmentProductManagement"
         android:name="com.spe.miroris.feature.productManagement.controller.FragmentProductManagement"
         android:label="FragmentProductManagement" />
+    <fragment
+        android:id="@+id/fragmentFundManagement"
+        android:name="com.spe.miroris.feature.fundManagement.FragmentFundManagement"
+        android:label="FragmentFundManagement" />
+    <fragment
+        android:id="@+id/fragmentInvestmentManagement"
+        android:name="com.spe.miroris.feature.investmentManagement.FragmentInvestmentManagement"
+        android:label="FragmentInvestmentManagement" />
 </navigation>
