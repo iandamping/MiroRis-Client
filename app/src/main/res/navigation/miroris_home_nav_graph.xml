@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_fragmentHome_to_fragmentInvestmentManagement"
             app:destination="@id/fragmentInvestmentManagement" />
+        <action
+            android:id="@+id/action_fragmentHome_to_fragmentLogin"
+            app:destination="@id/fragmentLogin" />
     </fragment>
     <dialog
         android:id="@+id/dialogFragmentFilter"
@@ -33,7 +36,7 @@
     <fragment
         android:id="@+id/fragmentProfile"
         android:name="com.spe.miroris.feature.FragmentProfile"
-        android:label="FragmentProfile" >
+        android:label="Profile" >
         <action
             android:id="@+id/action_fragmentProfile_to_fragmentEditProfile"
             app:destination="@id/fragmentEditProfile" />
@@ -41,7 +44,7 @@
     <fragment
         android:id="@+id/fragmentEditProfile"
         android:name="com.spe.miroris.feature.FragmentEditProfile"
-        android:label="FragmentEditProfile" />
+        android:label="Edit Profile" />
     <fragment
         android:id="@+id/fragmentAddProductFirstStep"
         android:name="com.spe.miroris.feature.addProduct.FragmentAddProductFirstStep"
@@ -90,4 +93,8 @@
         android:id="@+id/fragmentInvestmentManagement"
         android:name="com.spe.miroris.feature.investmentManagement.FragmentInvestmentManagement"
         android:label="FragmentInvestmentManagement" />
+    <fragment
+        android:id="@+id/fragmentLogin"
+        android:name="com.spe.miroris.feature.FragmentLogin"
+        android:label="Login" />
 </navigation>
