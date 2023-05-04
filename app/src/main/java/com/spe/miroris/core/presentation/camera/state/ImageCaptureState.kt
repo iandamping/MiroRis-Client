@@ -1,4 +1,4 @@
-package com.spe.miroris.camera.state
+package com.spe.miroris.core.presentation.camera.state
 
 import javax.annotation.concurrent.Immutable
 

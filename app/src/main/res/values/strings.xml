@@ -59,6 +59,8 @@
     <string name="close_the_dialog">close the dialog</string>
     <string name="person_that_warn_you">person that warn you</string>
     <string name="ok">OK</string>
+    <string name="check_internet_condition">Please check your internet connection</string>
+    <string name="default_error_message">The application has encountered an unknown error.</string>
 
     <string-array name="default_bank_spinner">
         <item>BCA</item>

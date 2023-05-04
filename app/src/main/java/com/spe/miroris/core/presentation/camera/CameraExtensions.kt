@@ -1,4 +1,4 @@
-package com.spe.miroris.camera
+package com.spe.miroris.core.presentation.camera
 
 import android.view.ViewTreeObserver
 import androidx.camera.view.PreviewView

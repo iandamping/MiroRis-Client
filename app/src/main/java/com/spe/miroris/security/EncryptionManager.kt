@@ -16,11 +16,17 @@ interface EncryptionManager {
 
     fun sha256WithBytesToHex(value: String): String
 
-    fun provideRsaPrivateKey(): String
+    fun provideHmac512Key(): String
 
-    fun provideClientKey(): String
+    fun provideRsaPublicKey(): String
+
+    fun provideAesKey(): String
+
+    fun provideAesIVKey(): String
 
     fun provideClientSecret(): String
 
-    fun provideClientIV(): String
+    fun provideClientId(): String
+
+    fun provideAuthVersion(): String
 }

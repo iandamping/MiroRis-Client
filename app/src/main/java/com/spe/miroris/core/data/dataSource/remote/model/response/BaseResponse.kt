@@ -4,9 +4,9 @@ import com.squareup.moshi.Json
 
 data class BaseResponse<out T>(
     @Json(name = "code")
-    private val code: Int,
+    val code: Int,
     @Json(name = "message")
-    private val message: String,
+    val message: String,
     @Json(name = "data")
-    private val data: T?
+    val data: T?
 )

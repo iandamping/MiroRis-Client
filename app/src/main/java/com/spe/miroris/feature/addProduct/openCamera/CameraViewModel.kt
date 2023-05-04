@@ -6,9 +6,9 @@ import androidx.camera.view.PreviewView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.spe.miroris.camera.helper.CameraxHelper
-import com.spe.miroris.camera.photo.ImageCaptureListener
-import com.spe.miroris.camera.state.ImageCaptureState
+import com.spe.miroris.core.presentation.camera.helper.CameraxHelper
+import com.spe.miroris.core.presentation.camera.photo.ImageCaptureListener
+import com.spe.miroris.core.presentation.camera.state.ImageCaptureState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

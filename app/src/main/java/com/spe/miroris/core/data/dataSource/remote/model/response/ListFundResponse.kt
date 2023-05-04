@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 
 data class ListFundResponse(
     @Json(name = "list")
-    private val listOfFund: List<com.spe.miroris.core.data.dataSource.remote.model.response.FundResponse>,
+    private val listOfFund: List<FundResponse>,
     @Json(name = "total_amount")
     private val totalAmount: String,
     @Json(name = "countdata")

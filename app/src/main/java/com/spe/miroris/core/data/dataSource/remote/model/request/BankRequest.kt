@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 
 data class BankRequest(
     @Json(name = "search")
-    private val search: com.spe.miroris.core.data.dataSource.remote.model.request.BankNameRequest,
+    private val search: BankNameRequest,
     @Json(name = "picture")
     private val picture: String
 )

@@ -1,4 +1,4 @@
-package com.spe.miroris.camera.helper
+package com.spe.miroris.core.presentation.camera.helper
 
 import androidx.camera.core.Camera
 import androidx.camera.core.CameraSelector
