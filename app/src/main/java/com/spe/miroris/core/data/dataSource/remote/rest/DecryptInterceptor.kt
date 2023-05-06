@@ -3,7 +3,7 @@ package com.spe.miroris.core.data.dataSource.remote.rest
 import com.spe.miroris.security.EncryptionManager
 import okhttp3.Interceptor
 import okhttp3.Response
-import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import java.nio.charset.Charset
 import javax.inject.Inject
 
@@ -28,7 +28,7 @@ class DecryptInterceptor @Inject constructor(
                 val bodyContent = buffer.clone().readString(charset)
 
                 response.newBuilder()
-                    .body(ResponseBody.create(contentType, bodyContent.let(::decryptBody)))
+                    .body(bodyContent.let(::decryptBody).toResponseBody(contentType))
                     .build()
             } else response
         }
@@ -37,8 +37,6 @@ class DecryptInterceptor @Inject constructor(
         // decryption
         return encryptionManager.decryptAes(
             input = content,
-            aesKey = encryptionManager.provideAesKey(),
-            ivKey = encryptionManager.provideAesIVKey()
         )
     }
 }

@@ -38,14 +38,11 @@ class EncryptedRemoteLoginDataSourceImpl @Inject constructor(
         return try {
             val encryptedEmail = encryptionManager.encryptRsa(
                 data = email,
-                publicKey = encryptionManager.provideRsaPublicKey(),
             )
             val encryptedPassword = encryptionManager.encryptRsa(
                 data = password,
-                publicKey = encryptionManager.provideRsaPublicKey(),
             )
             val signature = encryptionManager.createHmacSignature(
-                hmacKey = encryptionManager.provideHmac512Key(),
                 value = "$encryptedEmail:$encryptedPassword"
             )
 

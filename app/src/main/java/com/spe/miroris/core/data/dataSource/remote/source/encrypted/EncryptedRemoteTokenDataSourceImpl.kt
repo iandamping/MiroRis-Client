@@ -1,26 +1,31 @@
-package com.spe.miroris.core.data.dataSource.remote.source.nonEncrypted
+package com.spe.miroris.core.data.dataSource.remote.source.encrypted
 
 import com.spe.miroris.R
 import com.spe.miroris.core.data.dataSource.remote.helper.RemoteHelper
 import com.spe.miroris.core.data.dataSource.remote.model.ResponseStatus
-import com.spe.miroris.core.data.dataSource.remote.model.common.RemoteResult
+import com.spe.miroris.core.data.dataSource.remote.model.common.EncryptedRemoteResult
 import com.spe.miroris.core.data.dataSource.remote.model.common.TokenRemoteResult
 import com.spe.miroris.core.data.dataSource.remote.model.request.TokenRequest
+import com.spe.miroris.core.data.dataSource.remote.model.response.BaseResponse
 import com.spe.miroris.core.data.dataSource.remote.model.response.TokenResponse
-import com.spe.miroris.core.data.dataSource.remote.rest.ApiInterface
+import com.spe.miroris.core.data.dataSource.remote.rest.EncryptedApiInterface
 import com.spe.miroris.core.presentation.helper.UtilityHelper
-import com.spe.miroris.di.qualifier.DefaultApiInterfaceAnnotation
+import com.spe.miroris.di.qualifier.EncryptedApiInterfaceAnnotation
 import com.spe.miroris.security.EncryptionManager
+import com.spe.miroris.util.parser.MoshiParser
+import com.squareup.moshi.Types
 import javax.inject.Inject
 
-class RemoteTokenDataSourceImpl @Inject constructor(
-    @DefaultApiInterfaceAnnotation private val api: ApiInterface,
+class EncryptedRemoteTokenDataSourceImpl @Inject constructor(
+    @EncryptedApiInterfaceAnnotation private val api: EncryptedApiInterface,
     private val remoteHelper: RemoteHelper,
     private val utilityHelper: UtilityHelper,
+    private val moshiParser: MoshiParser,
     private val encryptionManager: EncryptionManager
-) : RemoteTokenDataSource, RemoteHelper by remoteHelper {
+) : EncryptedRemoteTokenDataSource, RemoteHelper by remoteHelper {
 
     companion object {
+        private const val JSON_NULL = "json is null"
         private const val BODY_NULL = "response body is null"
         private const val DATA_NULL = "data from service is null"
         private const val APP_VERSION = "1.9.0"
@@ -34,27 +39,22 @@ class RemoteTokenDataSourceImpl @Inject constructor(
         os: String
     ): TokenRemoteResult<TokenResponse> {
         val encryptedAuthVersion = encryptionManager.encryptRsa(
-            publicKey = encryptionManager.provideRsaPublicKey(),
             data = encryptionManager.provideAuthVersion()
         )
         val encryptedClientID = encryptionManager.encryptRsa(
-            publicKey = encryptionManager.provideRsaPublicKey(),
             data = encryptionManager.provideClientId()
         )
         val encryptedClientSecret = encryptionManager.encryptRsa(
-            publicKey = encryptionManager.provideRsaPublicKey(),
             data = encryptionManager.provideClientSecret()
         )
         val encryptedUUID = encryptionManager.encryptRsa(
-            publicKey = encryptionManager.provideRsaPublicKey(),
             data = uuid
         )
         val signature = encryptionManager.createHmacSignature(
-            hmacKey = encryptionManager.provideHmac512Key(),
             value = "$encryptedAuthVersion:$encryptedClientID:$encryptedClientSecret:$encryptedUUID"
         )
         return try {
-            when (val remoteData = nonEncryptionCall(
+            when (val remoteData = encryptionCall(
                 api.getToken(
                     TokenRequest(
                         authVersion = encryptedAuthVersion,
@@ -69,22 +69,36 @@ class RemoteTokenDataSourceImpl @Inject constructor(
                     )
                 )
             )) {
-                is RemoteResult.Error -> TokenRemoteResult.SourceError(
+                is EncryptedRemoteResult.Error -> TokenRemoteResult.SourceError(
                     remoteData.exception.message ?: utilityHelper.getString(
                         R.string.default_error_message
                     )
                 )
 
-                is RemoteResult.Success -> {
-                    val body = remoteData.data.body()
-                    when (checkNotNull(body) { BODY_NULL }.code) {
-                        ResponseStatus.Success.getCode() -> TokenRemoteResult.SourceData(
-                            checkNotNull(body.data) { DATA_NULL }
+                is EncryptedRemoteResult.Success -> {
+                    val types =
+                        Types.newParameterizedType(
+                            BaseResponse::class.java,
+                            TokenResponse::class.java
                         )
 
-                        else -> TokenRemoteResult.SourceError(body.message)
+                    val data =
+                        checkNotNull(
+                            moshiParser.fromJson<BaseResponse<TokenResponse>>(
+                                checkNotNull(remoteData.data.body()) { BODY_NULL }, types
+                            )
+                        ) { JSON_NULL }
+
+                    when (data.code) {
+                        ResponseStatus.Success.getCode() -> TokenRemoteResult.SourceData(
+                            checkNotNull(data.data) { DATA_NULL }
+                        )
+
+                        else -> TokenRemoteResult.SourceError(data.message)
                     }
                 }
+
+                EncryptedRemoteResult.EncryptionError -> TokenRemoteResult.EncryptionError
             }
         } catch (e: Exception) {
             TokenRemoteResult.SourceError(

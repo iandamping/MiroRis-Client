@@ -4,6 +4,7 @@ import android.os.Build
 import android.util.Base64
 import com.spe.miroris.security.ftaes.FTAes
 import com.spe.miroris.security.hmac.HmacManager
+import com.spe.miroris.security.keyProvider.KeyProvider
 import com.spe.miroris.security.rsa.RSAHelper
 import timber.log.Timber
 import java.security.KeyFactory
@@ -16,37 +17,37 @@ import javax.inject.Inject
 class EncryptionManagerImpl @Inject constructor(
     private val ftAes: FTAes,
     private val rsaHelper: RSAHelper,
-    private val hmacManager: HmacManager
+    private val hmacManager: HmacManager,
+    private val keyProvider: KeyProvider
 ) :
     EncryptionManager {
     companion object {
         private const val TAG = "EncryptionManager"
     }
 
-    //todo : 1. this class must have dependecy for providing AES, RSA,HMAC and OTHERS key
 
-    override fun encryptAes(input: String, aesKey: String, ivKey: String): String {
-        return ftAes.encrypt(input, aesKey, ivKey)
+    override fun encryptAes(input: String): String {
+        return ftAes.encrypt(input, keyProvider.provideAES(), keyProvider.provideIvAES())
     }
 
-    override fun decryptAes(input: String, aesKey: String, ivKey: String): String {
-        return ftAes.decrypt(input, aesKey, ivKey)
+    override fun decryptAes(input: String): String {
+        return ftAes.decrypt(input, keyProvider.provideAES(), keyProvider.provideIvAES())
     }
 
-    override fun encryptRsa(publicKey: String, data: String): String {
-        return rsaHelper.encrypt(publicKey, data)
+    override fun encryptRsa(data: String): String {
+        return rsaHelper.encrypt(keyProvider.provideRsa(), data)
     }
 
     override fun decryptRsa(privateKey: String, data: String?): String {
         return rsaHelper.decrypt(privateKey, data)
     }
 
-    override fun createHmacSignature(hmacKey: String, value: String): String {
+    override fun createHmacSignature(value: String): String {
         var hmacResult = ""
         try {
             hmacResult =
                 Base64.encodeToString(
-                    hmacManager.computeHMACSHA512Byte(hmacKey, value),
+                    hmacManager.computeHMACSHA512Byte(keyProvider.provideHMAC(), value),
                     Base64.NO_WRAP
                 )
         } catch (e: Exception) {

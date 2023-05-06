@@ -5,12 +5,12 @@ import com.spe.miroris.core.data.dataSource.remote.model.common.TokenRemoteResul
 import com.spe.miroris.core.data.dataSource.remote.model.response.LoginResponse
 import com.spe.miroris.core.data.dataSource.remote.model.response.TokenResponse
 import com.spe.miroris.core.data.dataSource.remote.source.encrypted.EncryptedRemoteLoginDataSource
-import com.spe.miroris.core.data.dataSource.remote.source.nonEncrypted.RemoteTokenDataSource
+import com.spe.miroris.core.data.dataSource.remote.source.encrypted.EncryptedRemoteTokenDataSource
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(
+    private val encryptedRemoteTokenDataSource: EncryptedRemoteTokenDataSource,
     private val encryptedRemoteLoginDataSource: EncryptedRemoteLoginDataSource,
-    private val tokenDataSource: RemoteTokenDataSource,
 ) : RemoteDataSource {
     override suspend fun getToken(
         uuid: String,
@@ -18,7 +18,12 @@ class RemoteDataSourceImpl @Inject constructor(
         brand: String,
         os: String
     ): TokenRemoteResult<TokenResponse> {
-        return tokenDataSource.getToken(uuid = uuid, model = model, brand = brand, os = os)
+        return encryptedRemoteTokenDataSource.getToken(
+            uuid = uuid,
+            model = model,
+            brand = brand,
+            os = os
+        )
     }
 
 

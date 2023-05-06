@@ -1,7 +1,7 @@
 package com.spe.miroris.di.dataSource
 
-import com.spe.miroris.core.data.dataSource.remote.source.nonEncrypted.RemoteTokenDataSource
-import com.spe.miroris.core.data.dataSource.remote.source.nonEncrypted.RemoteTokenDataSourceImpl
+import com.spe.miroris.core.data.dataSource.remote.source.encrypted.EncryptedRemoteTokenDataSource
+import com.spe.miroris.core.data.dataSource.remote.source.encrypted.EncryptedRemoteTokenDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,5 +12,5 @@ import dagger.hilt.components.SingletonComponent
 interface RemoteTokenDataSourceModule {
 
     @Binds
-    fun bindsRemoteTokenDataSource(impl: RemoteTokenDataSourceImpl): RemoteTokenDataSource
+    fun bindsEncryptedRemoteTokenDataSource(impl: EncryptedRemoteTokenDataSourceImpl): EncryptedRemoteTokenDataSource
 }
