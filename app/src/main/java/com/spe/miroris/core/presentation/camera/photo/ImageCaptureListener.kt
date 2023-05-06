@@ -1,7 +1,7 @@
-package com.spe.miroris.camera.photo
+package com.spe.miroris.core.presentation.camera.photo
 
 import androidx.camera.core.ImageCapture
-import com.spe.miroris.camera.state.ImageCaptureState
+import com.spe.miroris.core.presentation.camera.state.ImageCaptureState
 import kotlinx.coroutines.flow.Flow
 
 /**

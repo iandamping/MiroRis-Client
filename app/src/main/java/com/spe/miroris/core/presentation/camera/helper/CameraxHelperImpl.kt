@@ -1,12 +1,12 @@
-package com.spe.miroris.camera.helper
+package com.spe.miroris.core.presentation.camera.helper
 
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.lifecycle.LifecycleOwner
 import com.google.common.util.concurrent.ListenableFuture
-import com.spe.miroris.camera.afterMeasured
-import com.spe.miroris.camera.photo.ImageCaptureListener
+import com.spe.miroris.core.presentation.camera.afterMeasured
+import com.spe.miroris.core.presentation.camera.photo.ImageCaptureListener
 import com.spe.miroris.di.qualifier.CameraxOutputOptions
 import com.spe.miroris.di.qualifier.LensFacingBack
 import com.spe.miroris.di.qualifier.LensFacingFront

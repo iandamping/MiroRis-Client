@@ -1,7 +1,7 @@
 package com.spe.miroris.di
 
-import com.spe.miroris.camera.photo.ImageCaptureListener
-import com.spe.miroris.camera.photo.ImageCaptureListenerImpl
+import com.spe.miroris.core.presentation.camera.photo.ImageCaptureListener
+import com.spe.miroris.core.presentation.camera.photo.ImageCaptureListenerImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

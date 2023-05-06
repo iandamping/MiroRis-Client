@@ -4,6 +4,7 @@ import android.os.Build
 import android.util.Base64
 import com.spe.miroris.security.ftaes.FTAes
 import com.spe.miroris.security.hmac.HmacManager
+import com.spe.miroris.security.keyProvider.KeyProvider
 import com.spe.miroris.security.rsa.RSAHelper
 import timber.log.Timber
 import java.security.KeyFactory
@@ -16,35 +17,37 @@ import javax.inject.Inject
 class EncryptionManagerImpl @Inject constructor(
     private val ftAes: FTAes,
     private val rsaHelper: RSAHelper,
-    private val hmacManager: HmacManager
+    private val hmacManager: HmacManager,
+    private val keyProvider: KeyProvider
 ) :
     EncryptionManager {
     companion object {
         private const val TAG = "EncryptionManager"
     }
 
-    override fun encryptAes(input: String, aesKey: String, ivKey: String): String {
-        return ftAes.encrypt(input, aesKey, ivKey)
+
+    override fun encryptAes(input: String): String {
+        return ftAes.encrypt(input, keyProvider.provideAES(), keyProvider.provideIvAES())
     }
 
-    override fun decryptAes(input: String, aesKey: String, ivKey: String): String {
-        return ftAes.decrypt(input, aesKey, ivKey)
+    override fun decryptAes(input: String): String {
+        return ftAes.decrypt(input, keyProvider.provideAES(), keyProvider.provideIvAES())
     }
 
-    override fun encryptRsa(publicKey: String, data: String): String {
-        return rsaHelper.encrypt(publicKey, data)
+    override fun encryptRsa(data: String): String {
+        return rsaHelper.encrypt(keyProvider.provideRsa(), data)
     }
 
     override fun decryptRsa(privateKey: String, data: String?): String {
         return rsaHelper.decrypt(privateKey, data)
     }
 
-    override fun createHmacSignature(hmacKey: String, value: String): String {
+    override fun createHmacSignature(value: String): String {
         var hmacResult = ""
         try {
             hmacResult =
                 Base64.encodeToString(
-                    hmacManager.computeHMACSHA512Byte(hmacKey, value),
+                    hmacManager.computeHMACSHA512Byte(keyProvider.provideHMAC(), value),
                     Base64.NO_WRAP
                 )
         } catch (e: Exception) {
@@ -88,20 +91,41 @@ class EncryptionManagerImpl @Inject constructor(
         return result.toString()
     }
 
-    override fun provideRsaPrivateKey(): String {
-        return "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDdrnN/gnTjY4hFfFjdooeAGOg0kGrzfzgNsuLzh0nymr2rnNRpBjMdD8NDO3qiD5D7KP2Z973RfkA7PshMriEfK5OH05OIZ2gRWplXgyTmQJIrSPawIL50xpI35T/nvad4MXerH8C9qrNiQAjGuRL2CkEB4aTDuNF4MSmjsIb6im3uaFfx6JU1fBVovfMiNWeFT+s5JFUaVLgK0AoziYgTg1zGHBOilKq5u4FSQjnLXILu2Q3itly1pStB59oX3vxCrncgiYgcx1/MO7Xym5JifXYO0orgGuC+XkqmamqRQHycOkdjvwr70okWdpqYvwRaiyqrZ6UF3R4ToCFLLF3dAgMBAD8CggEAK4L1sx1hc4RLwn/7Z7bNUhXRWnR/87drtAGxl4OyUKHqfG+JsXqcZNAeVbGsE9ecXLmBQk1hFnDf3/usA2nb8UMccW7ZZAwv7KOYP3+h2k8EtYvhmOBjqqLYPXewHJTUc38NvjNHq7A17n8i39Pd09MtQvbl8CTpw+2zLvIcQ+qXiRHzB7gCfmGj/Snsdjz/2qczy0w6neLWx2Y0tAxci1eMo6iu1luH/M/jyzqBnmu77MXSXDTSySkHrfu0AuhYDYpEDTrNhyfQD4exN/Lg7detPme8Myedk1mdYXGqHzPcoGUZluu11Qk84/Vt4q2QsQbZx7RFJj4iNH5+iHnZdwKBgQD2xd/IGxUhPWJcxrFezw+Gc8fnkyjRU9Uq5iQOjd/z08Wu0vFQ6h+2uDdwGWbXePmwAAMoFBIxwW4zsBX15jIJh7SQtGxTQaQt61/gxR73ik24GPcdp9jBm9J6c4wjFjYiL4CfLTng9HGFePcd3Ok+6Y2k8VJCvuOhUA+kyRqeuQKBgQDl+GZQyq9Fhit8WW8x+SYNBBxJtn1Ww/lsTXCkXkbG7oUQ2qr4S7mDHQu9gwH8PA3EwGDwYVAf2+SZVvzX1oiktTptOZtYUkkwFZYeOWNrfupmprqDCUg+b+fifKsreFNg1oSINoXsQ3/3uMQcRnFaOSM1w55oYYQ/C8JHR+FGRQKBgADjRnvz9+13NEDRk5gw8taNJf/vf7kyZeFxEVX5QnMac7fC8X0I0qlkwgdbh+RdcId86EW/yE56jiibqAXlPMwqiqJXcs6b6CU5K+qUey470sbGzBeViO8fotz0glkcanuzErj3ONpdpE04Crkr9dWGczg5OGL1LaOdcg9aIjYfAoGBAMq88JIhFMwka1MeWvXfkD5HCBdSKpvfLSIlYq3SZn97xLh4/82NBKx7ZCmB7vurcxkGdjOnuPTIxe1WaXPmyuIiQXOcvPFNonhRwEyy1id809GalVS3jLNwiRaQY2cylWiUL5WZBD9z5tth7vv/aVWojQZR45ar0PFS1fpL5i1jAoGBALm0Uayl5H3G98vCl5wSkBekomykSfRCbT65dpWEGDkscHrMwMd9jOdPRrZKG5Q0qnmSRW7rrKr16RyJtGwq9yZ2YLkx6HAgc929IBtgn8/akZ7e3BZdQC607/EbGgfXbDweHja2BBT6cusgTv5fjPZFXqCqkxZuew7RYcE+Bz9S"
+    override fun provideHmac512Key(): String {
+        return "Hk?H67>MXaRD"
     }
 
-    override fun provideClientKey(): String {
-        return "MOBILE"
+    override fun provideRsaPublicKey(): String {
+        return "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAqRpvWSazwzXt01sxlquF\n" +
+                "H5Gy50Fybd1qX4jgT4oF042X7gUBxvBi7ryiuoAI1WbxZhOlu3MKD1kCDBJJy0NU\n" +
+                "fxVMFu6zrZog+ZDvvPP9UsDu/7StVaF7hzF0p1ZIqw1ZZKORBjq3enTvqS6cDi0A\n" +
+                "sB/D5aVKF6BgF33ULxTkXXiu5OQv3/Y2OZr5Py0cbMvxswhNPLVCWt4+48JuGp+S\n" +
+                "CRYOLYDW6u3vjdMgzXYA9VNDDOUnHy2gI//BWWygThAlilaFCurUGEOwxD8wYBXg\n" +
+                "8dPhwZ4juBFcFmRI4Oa51si5zSHOMCYJ7EfSLkLT4CUIvMonkAr2R50fFAf4nmil\n" +
+                "C0M1ZzvB4rmfZuHzBz0pNDxOi7awB+fDQ/oYkb6RPSEnugmTuhDy0wTXX4b+vdEq\n" +
+                "K3V9GTboGs8KAbpOUtkLZYWP956lrTMFS/h5A5zzoLCHVvOiW4KkkPaj0tbLqzHM\n" +
+                "hpeAu2/x/Z2ASQ0/wupGcdqp+6YuO0Q8CwVcZiicpeftAgMBAAE=\n"
+    }
+
+    override fun provideAesKey(): String {
+        return "yM2Kh&hkGH8JKMNR6GTJKRdFGBvFUIKM"
+    }
+
+
+    override fun provideAesIVKey(): String {
+        return "jKL67hJLArcT9Hnm"
     }
 
     override fun provideClientSecret(): String {
-        return "3db4d061aa9830d72143998s2013is90"
+        return "ChT4D?JyiXaD"
     }
 
-    override fun provideClientIV(): String {
-        return "3db4d061aa9830d7"
+    override fun provideClientId(): String {
+        return "2023"
+    }
+
+    override fun provideAuthVersion(): String {
+        return "V1.0.0"
     }
 
 

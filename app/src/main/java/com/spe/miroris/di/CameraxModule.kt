@@ -1,7 +1,7 @@
 package com.spe.miroris.di
 
-import com.spe.miroris.camera.helper.CameraxHelper
-import com.spe.miroris.camera.helper.CameraxHelperImpl
+import com.spe.miroris.core.presentation.camera.helper.CameraxHelper
+import com.spe.miroris.core.presentation.camera.helper.CameraxHelperImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

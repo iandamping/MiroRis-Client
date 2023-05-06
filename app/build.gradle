@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.spe.miroris"
-        minSdk 21
+        minSdk 23
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -135,4 +135,6 @@ dependencies {
     implementation 'com.airbnb.android:lottie:4.1.0'
     //datastore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
+    //security
+    implementation "androidx.security:security-crypto:1.0.0"
 }

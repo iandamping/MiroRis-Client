@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 
 data class ProductCatalogRequest(
     @Json(name = "search")
-    private val search: com.spe.miroris.core.data.dataSource.remote.model.request.CatalogRequest,
+    private val search: CatalogRequest,
     @Json(name = "signature")
     private val signature: String
 )
