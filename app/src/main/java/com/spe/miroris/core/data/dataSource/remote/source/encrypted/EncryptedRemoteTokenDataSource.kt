@@ -10,6 +10,7 @@ interface EncryptedRemoteTokenDataSource {
         uuid: String,
         model: String,
         brand: String,
-        os: String
+        os: String,
+        token: String
     ): TokenRemoteResult<TokenResponse>
 }

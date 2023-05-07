@@ -1,9 +1,8 @@
 package com.spe.miroris.core.data.dataSource.remote.helper
 
 import com.spe.miroris.R
-import com.spe.miroris.core.data.dataSource.remote.model.common.EncryptedRemoteResult
-import com.spe.miroris.core.data.dataSource.remote.model.common.RemoteResult
 import com.spe.miroris.core.data.dataSource.remote.model.response.BaseResponse
+import com.spe.miroris.core.data.dataSource.remote.model.response.VoidBaseResponse
 import com.spe.miroris.core.presentation.helper.UtilityHelper
 import retrofit2.Response
 import java.io.EOFException
@@ -32,25 +31,43 @@ class RemoteHelperImpl @Inject constructor(private val utilityHelper: UtilityHel
         }
     }
 
-
-    override suspend fun encryptionCall(call: Response<String>): EncryptedRemoteResult {
+    override suspend fun nonEncryptionVoidCall(call: Response<VoidBaseResponse>): RemoteVoidResult {
         return try {
             if (call.isSuccessful) {
-                return EncryptedRemoteResult.Success(call)
-            } else return EncryptedRemoteResult.Error(Exception(utilityHelper.getString(R.string.default_error_message)))
+                return RemoteVoidResult.Success
+            } else return RemoteVoidResult.Error(Exception(utilityHelper.getString(R.string.default_error_message)))
         } catch (e: Exception) {
-            EncryptedRemoteResult.Error(Exception(utilityHelper.getString(R.string.default_error_message)))
+            RemoteVoidResult.Error(Exception(utilityHelper.getString(R.string.default_error_message)))
         } catch (e: SocketException) {
-            EncryptedRemoteResult.Error(Exception(utilityHelper.getString(R.string.check_internet_condition)))
-
-        } catch (e: EOFException) {
-            EncryptedRemoteResult.EncryptionError
+            RemoteVoidResult.Error(Exception(utilityHelper.getString(R.string.check_internet_condition)))
 
         } catch (e: UnknownHostException) {
-            EncryptedRemoteResult.Error(Exception(utilityHelper.getString(R.string.check_internet_condition)))
+            RemoteVoidResult.Error(Exception(utilityHelper.getString(R.string.check_internet_condition)))
 
         } catch (e: SocketTimeoutException) {
-            EncryptedRemoteResult.Error(Exception(utilityHelper.getString(R.string.check_internet_condition)))
+            RemoteVoidResult.Error(Exception(utilityHelper.getString(R.string.check_internet_condition)))
+        }
+    }
+
+
+    override suspend fun encryptionCall(call: Response<String>): RemoteEncryptedResult {
+        return try {
+            if (call.isSuccessful) {
+                return RemoteEncryptedResult.Success(call)
+            } else return RemoteEncryptedResult.Error(Exception(utilityHelper.getString(R.string.default_error_message)))
+        } catch (e: Exception) {
+            RemoteEncryptedResult.Error(Exception(utilityHelper.getString(R.string.default_error_message)))
+        } catch (e: SocketException) {
+            RemoteEncryptedResult.Error(Exception(utilityHelper.getString(R.string.check_internet_condition)))
+
+        } catch (e: EOFException) {
+            RemoteEncryptedResult.EncryptionError
+
+        } catch (e: UnknownHostException) {
+            RemoteEncryptedResult.Error(Exception(utilityHelper.getString(R.string.check_internet_condition)))
+
+        } catch (e: SocketTimeoutException) {
+            RemoteEncryptedResult.Error(Exception(utilityHelper.getString(R.string.check_internet_condition)))
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.spe.miroris.core.data.dataSource.remote.model.common
+package com.spe.miroris.core.data.dataSource.remote.helper
 
 import com.spe.miroris.core.data.dataSource.remote.model.response.BaseResponse
 import retrofit2.Response
