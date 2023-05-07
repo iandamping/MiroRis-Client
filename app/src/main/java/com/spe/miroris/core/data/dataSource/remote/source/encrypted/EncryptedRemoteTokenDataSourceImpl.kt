@@ -1,14 +1,15 @@
 package com.spe.miroris.core.data.dataSource.remote.source.encrypted
 
 import com.spe.miroris.R
+import com.spe.miroris.core.data.dataSource.remote.helper.RemoteEncryptedResult
 import com.spe.miroris.core.data.dataSource.remote.helper.RemoteHelper
 import com.spe.miroris.core.data.dataSource.remote.model.ResponseStatus
-import com.spe.miroris.core.data.dataSource.remote.model.common.EncryptedRemoteResult
 import com.spe.miroris.core.data.dataSource.remote.model.common.TokenRemoteResult
 import com.spe.miroris.core.data.dataSource.remote.model.request.TokenRequest
 import com.spe.miroris.core.data.dataSource.remote.model.response.BaseResponse
 import com.spe.miroris.core.data.dataSource.remote.model.response.TokenResponse
 import com.spe.miroris.core.data.dataSource.remote.rest.EncryptedApiInterface
+import com.spe.miroris.core.data.dataSource.remote.rest.NetworkConstant.CONTENT_TYPE
 import com.spe.miroris.core.presentation.helper.UtilityHelper
 import com.spe.miroris.di.qualifier.EncryptedApiInterfaceAnnotation
 import com.spe.miroris.security.EncryptionManager
@@ -36,7 +37,8 @@ class EncryptedRemoteTokenDataSourceImpl @Inject constructor(
         uuid: String,
         model: String,
         brand: String,
-        os: String
+        os: String,
+        token: String
     ): TokenRemoteResult<TokenResponse> {
         val encryptedAuthVersion = encryptionManager.encryptRsa(
             data = encryptionManager.provideAuthVersion()
@@ -53,9 +55,11 @@ class EncryptedRemoteTokenDataSourceImpl @Inject constructor(
         val signature = encryptionManager.createHmacSignature(
             value = "$encryptedAuthVersion:$encryptedClientID:$encryptedClientSecret:$encryptedUUID"
         )
+
         return try {
             when (val remoteData = encryptionCall(
                 api.getToken(
+                    contentType = CONTENT_TYPE, tokenAuthorization = "Bearer $token", request =
                     TokenRequest(
                         authVersion = encryptedAuthVersion,
                         clientId = encryptedClientID,
@@ -69,13 +73,13 @@ class EncryptedRemoteTokenDataSourceImpl @Inject constructor(
                     )
                 )
             )) {
-                is EncryptedRemoteResult.Error -> TokenRemoteResult.SourceError(
+                is RemoteEncryptedResult.Error -> TokenRemoteResult.Error(
                     remoteData.exception.message ?: utilityHelper.getString(
                         R.string.default_error_message
                     )
                 )
 
-                is EncryptedRemoteResult.Success -> {
+                is RemoteEncryptedResult.Success -> {
                     val types =
                         Types.newParameterizedType(
                             BaseResponse::class.java,
@@ -90,18 +94,18 @@ class EncryptedRemoteTokenDataSourceImpl @Inject constructor(
                         ) { JSON_NULL }
 
                     when (data.code) {
-                        ResponseStatus.Success.getCode() -> TokenRemoteResult.SourceData(
+                        ResponseStatus.Success.getCode() -> TokenRemoteResult.Success(
                             checkNotNull(data.data) { DATA_NULL }
                         )
 
-                        else -> TokenRemoteResult.SourceError(data.message)
+                        else -> TokenRemoteResult.Error(data.messageEnglish)
                     }
                 }
 
-                EncryptedRemoteResult.EncryptionError -> TokenRemoteResult.EncryptionError
+                RemoteEncryptedResult.EncryptionError -> TokenRemoteResult.EncryptionError
             }
         } catch (e: Exception) {
-            TokenRemoteResult.SourceError(
+            TokenRemoteResult.Error(
                 e.message ?: utilityHelper.getString(
                     R.string.default_error_message
                 )

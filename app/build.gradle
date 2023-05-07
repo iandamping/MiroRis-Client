@@ -10,7 +10,7 @@ plugins {
 android {
     namespace 'com.spe.miroris'
     compileSdk 33
-    buildToolsVersion '34.0.0 rc2'
+    buildToolsVersion '34.0.0 rc3'
 
     defaultConfig {
         applicationId "com.spe.miroris"

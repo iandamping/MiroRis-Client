@@ -1,7 +1,7 @@
 package com.spe.miroris.core.data.dataSource.remote.source.encrypted
 
 import com.spe.miroris.core.data.dataSource.remote.helper.RemoteHelper
-import com.spe.miroris.core.data.dataSource.remote.model.common.EncryptedRemoteResult
+import com.spe.miroris.core.data.dataSource.remote.helper.RemoteEncryptedResult
 import com.spe.miroris.core.data.dataSource.remote.model.common.TokenRemoteResult
 import com.spe.miroris.core.data.dataSource.remote.model.response.TokenResponse
 import com.spe.miroris.core.data.dataSource.remote.rest.EncryptedApiInterface
@@ -53,15 +53,16 @@ class EncryptedRemoteTokenDataSourceImplTest {
 
 
     @Test
-    fun `when datasource call getToken should return SourceData`() = runTest {
+    fun `when datasource call getToken should return Success`() = runTest {
         //given
         val tokenResponse = TokenResponse("a", "Bearer", "3600")
-        val successResponse = TokenRemoteResult.SourceData(tokenResponse)
-        coEvery { remoteHelper.encryptionCall(apiInterface.getToken(any())) } returns EncryptedRemoteResult.Success(
+        val successResponse = TokenRemoteResult.Success(tokenResponse)
+        coEvery { remoteHelper.encryptionCall(apiInterface.getToken(any(),any(),any())) } returns RemoteEncryptedResult.Success(
             Response.success(
                 "{\n" +
                         "    \"code\": 200,\n" +
-                        "    \"message\": \"Success\",\n" +
+                        "    \"message_en\": \"Success\",\n" +
+                        "    \"message_id\": \"Sukses\",\n" +
                         "    \"data\": {\n" +
                         "        \"access_token\":\"a\",\n" +
                         "        \"type\": \"Bearer\",\n" +
@@ -72,11 +73,11 @@ class EncryptedRemoteTokenDataSourceImplTest {
         )
 
         //when
-        val actualResult = sut.getToken("c", "c", "c", "c")
+        val actualResult = sut.getToken("c", "c", "c", "c","c")
         coVerify(
             exactly = 1,
-            verifyBlock = { remoteHelper.encryptionCall(apiInterface.getToken(any())) })
-        coVerify(exactly = 1, verifyBlock = { apiInterface.getToken(any()) })
+            verifyBlock = { remoteHelper.encryptionCall(apiInterface.getToken(any(),any(),any())) })
+        coVerify(exactly = 1, verifyBlock = { apiInterface.getToken(any(),any(),any()) })
         coVerify(exactly = 1, verifyBlock = { encryptionManager.createHmacSignature(any()) })
         coVerify(exactly = 4, verifyBlock = { encryptionManager.encryptRsa(any()) })
         //then
@@ -87,14 +88,15 @@ class EncryptedRemoteTokenDataSourceImplTest {
 
 
     @Test
-    fun `when datasource call getToken should return SourceError from code 201`() = runTest {
+    fun `when datasource call getToken should return Error from code 201`() = runTest {
         //given
-        val errorResponse = TokenRemoteResult.SourceError("Failed")
-        coEvery { remoteHelper.encryptionCall(apiInterface.getToken(any())) } returns EncryptedRemoteResult.Success(
+        val errorResponse = TokenRemoteResult.Error("Failed")
+        coEvery { remoteHelper.encryptionCall(apiInterface.getToken(any(),any(),any())) } returns RemoteEncryptedResult.Success(
             Response.success(
                 "{\n" +
                         "    \"code\": 201,\n" +
-                        "    \"message\": \"Failed\",\n" +
+                        "    \"message_en\": \"Failed\",\n" +
+                        "    \"message_id\": \"Gagal\",\n" +
                         "    \"data\": {\n" +
                         "        \"access_token\":\"a\",\n" +
                         "        \"type\": \"Bearer\",\n" +
@@ -105,11 +107,11 @@ class EncryptedRemoteTokenDataSourceImplTest {
         )
 
         //when
-        val actualResult = sut.getToken("c", "c", "c", "c")
+        val actualResult = sut.getToken("c", "c", "c", "c","c")
         coVerify(
             exactly = 1,
-            verifyBlock = { remoteHelper.encryptionCall(apiInterface.getToken(any())) })
-        coVerify(exactly = 1, verifyBlock = { apiInterface.getToken(any()) })
+            verifyBlock = { remoteHelper.encryptionCall(apiInterface.getToken(any(),any(),any())) })
+        coVerify(exactly = 1, verifyBlock = { apiInterface.getToken(any(),any(),any()) })
         coVerify(exactly = 1, verifyBlock = { encryptionManager.createHmacSignature(any()) })
         coVerify(exactly = 4, verifyBlock = { encryptionManager.encryptRsa(any()) })
         //then
@@ -120,19 +122,19 @@ class EncryptedRemoteTokenDataSourceImplTest {
 
 
     @Test
-    fun `when datasource call getToken should return SourceError from null body`() = runTest {
+    fun `when datasource call getToken should return Error from null body`() = runTest {
         //given
-        val errorResponse = TokenRemoteResult.SourceError("response body is null")
-        coEvery { remoteHelper.encryptionCall(apiInterface.getToken(any())) } returns EncryptedRemoteResult.Success(
+        val errorResponse = TokenRemoteResult.Error("response body is null")
+        coEvery { remoteHelper.encryptionCall(apiInterface.getToken(any(),any(),any())) } returns RemoteEncryptedResult.Success(
             Response.success(null)
         )
 
         //when
-        val actualResult = sut.getToken("c", "c", "c", "c")
+        val actualResult = sut.getToken("c", "c", "c", "c","c")
         coVerify(
             exactly = 1,
-            verifyBlock = { remoteHelper.encryptionCall(apiInterface.getToken(any())) })
-        coVerify(exactly = 1, verifyBlock = { apiInterface.getToken(any()) })
+            verifyBlock = { remoteHelper.encryptionCall(apiInterface.getToken(any(),any(),any())) })
+        coVerify(exactly = 1, verifyBlock = { apiInterface.getToken(any(),any(),any()) })
         coVerify(exactly = 1, verifyBlock = { encryptionManager.createHmacSignature(any()) })
         coVerify(exactly = 4, verifyBlock = { encryptionManager.encryptRsa(any()) })
         //then
@@ -142,25 +144,26 @@ class EncryptedRemoteTokenDataSourceImplTest {
     }
 
     @Test
-    fun `when datasource call getToken should return SourceError from null data`() = runTest {
+    fun `when datasource call getToken should return Error from null data`() = runTest {
         //given
-        val errorResponse = TokenRemoteResult.SourceError("data from service is null")
-        coEvery { remoteHelper.encryptionCall(apiInterface.getToken(any())) } returns EncryptedRemoteResult.Success(
+        val errorResponse = TokenRemoteResult.Error("data from service is null")
+        coEvery { remoteHelper.encryptionCall(apiInterface.getToken(any(),any(),any())) } returns RemoteEncryptedResult.Success(
             Response.success(
                 "{\n" +
                         "    \"code\": 200,\n" +
-                        "    \"message\": \"Success\",\n" +
+                        "    \"message_en\": \"Success\",\n" +
+                        "    \"message_id\": \"Sukses\",\n" +
                         "    \"data\": null \n" +
                         "}"
             )
         )
 
         //when
-        val actualResult = sut.getToken("c", "c", "c", "c")
+        val actualResult = sut.getToken("c", "c", "c", "c","c")
         coVerify(
             exactly = 1,
-            verifyBlock = { remoteHelper.encryptionCall(apiInterface.getToken(any())) })
-        coVerify(exactly = 1, verifyBlock = { apiInterface.getToken(any()) })
+            verifyBlock = { remoteHelper.encryptionCall(apiInterface.getToken(any(),any(),any())) })
+        coVerify(exactly = 1, verifyBlock = { apiInterface.getToken(any(),any(),any()) })
         coVerify(exactly = 1, verifyBlock = { encryptionManager.createHmacSignature(any()) })
         coVerify(exactly = 4, verifyBlock = { encryptionManager.encryptRsa(any()) })
         //then
@@ -171,18 +174,18 @@ class EncryptedRemoteTokenDataSourceImplTest {
 
 
     @Test
-    fun `when datasource call getToken should return SourceError from remoteHelper`() = runTest {
+    fun `when datasource call getToken should return Error from remoteHelper`() = runTest {
         //given
-        val errorResponse = TokenRemoteResult.SourceError("Failed")
-        coEvery { remoteHelper.encryptionCall(apiInterface.getToken(any())) } returns EncryptedRemoteResult.Error(
+        val errorResponse = TokenRemoteResult.Error("Failed")
+        coEvery { remoteHelper.encryptionCall(apiInterface.getToken(any(),any(),any())) } returns RemoteEncryptedResult.Error(
             Exception("Failed")
         )
         //when
-        val actualResult = sut.getToken("c", "c", "c", "c")
+        val actualResult = sut.getToken("c", "c", "c", "c","c")
         coVerify(
             exactly = 1,
-            verifyBlock = { remoteHelper.encryptionCall(apiInterface.getToken(any())) })
-        coVerify(exactly = 1, verifyBlock = { apiInterface.getToken(any()) })
+            verifyBlock = { remoteHelper.encryptionCall(apiInterface.getToken(any(),any(),any())) })
+        coVerify(exactly = 1, verifyBlock = { apiInterface.getToken(any(),any(),any()) })
         coVerify(exactly = 1, verifyBlock = { encryptionManager.createHmacSignature(any()) })
         coVerify(exactly = 4, verifyBlock = { encryptionManager.encryptRsa(any()) })
         //then
@@ -192,16 +195,16 @@ class EncryptedRemoteTokenDataSourceImplTest {
     }
 
     @Test
-    fun `when datasource call getToken should return SourceError from EncryptionError`() =
+    fun `when datasource call getToken should return Error from EncryptionError`() =
         runTest {
             //given
-            coEvery { remoteHelper.encryptionCall(apiInterface.getToken(any())) } returns EncryptedRemoteResult.EncryptionError
+            coEvery { remoteHelper.encryptionCall(apiInterface.getToken(any(),any(),any())) } returns RemoteEncryptedResult.EncryptionError
             //when
-            val actualResult = sut.getToken("c", "c", "c", "c")
+            val actualResult = sut.getToken("c", "c", "c", "c","c")
             coVerify(
                 exactly = 1,
-                verifyBlock = { remoteHelper.encryptionCall(apiInterface.getToken(any())) })
-            coVerify(exactly = 1, verifyBlock = { apiInterface.getToken(any()) })
+                verifyBlock = { remoteHelper.encryptionCall(apiInterface.getToken(any(),any(),any())) })
+            coVerify(exactly = 1, verifyBlock = { apiInterface.getToken(any(),any(),any()) })
             coVerify(exactly = 1, verifyBlock = { encryptionManager.createHmacSignature(any()) })
             coVerify(exactly = 4, verifyBlock = { encryptionManager.encryptRsa(any()) })
             //then
