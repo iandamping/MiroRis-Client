@@ -7,6 +7,7 @@ import org.junit.runners.Suite.SuiteClasses
 @RunWith(Suite::class)
 @SuiteClasses(
     EncryptedRemoteLoginDataSourceImplTest::class,
-    EncryptedRemoteTokenDataSourceImplTest::class
+    EncryptedRemoteTokenDataSourceImplTest::class,
+    EncryptedRemoteRefreshTokenDataSourceImplTest::class
 )
 class EncryptedRemoteSuiteTest

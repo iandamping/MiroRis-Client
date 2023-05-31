@@ -17,10 +17,22 @@
         android:id="@+id/viewPagerProductManagement"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline64"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddProduct"
         app:layout_constraintEnd_toStartOf="@+id/guideline63"
         app:layout_constraintStart_toStartOf="@+id/guideline62"
         app:layout_constraintTop_toBottomOf="@+id/tabLayoutProductManagement" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddProduct"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tambah produk baru"
+        app:backgroundTint="@color/button_blue"
+        app:layout_constraintBottom_toTopOf="@+id/guideline64"
+        app:layout_constraintEnd_toStartOf="@+id/guideline63"
+        app:layout_constraintStart_toStartOf="@+id/guideline62" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline62"
@@ -41,6 +53,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.99" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

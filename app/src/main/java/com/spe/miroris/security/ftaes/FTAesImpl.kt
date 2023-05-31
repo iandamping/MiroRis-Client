@@ -2,6 +2,7 @@ package com.spe.miroris.security.ftaes
 
 import android.annotation.SuppressLint
 import android.util.Base64
+import timber.log.Timber
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
@@ -16,11 +17,11 @@ class FTAesImpl @Inject constructor(): FTAes {
             val iv = ivKey.toByteArray(Charsets.UTF_8)
             val ivParameterSpec = IvParameterSpec(iv)
 
-            @SuppressLint("GetInstance") val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
+            @SuppressLint("GetInstance") val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
             cipher.init(1, e, ivParameterSpec)
             crypted = cipher.doFinal(input.toByteArray())
         } catch (var5: Exception) {
-            println(var5.toString())
+            Timber.e("encrypt failed : ${var5.message}")
         }
 
         return if (crypted != null) {
@@ -38,12 +39,12 @@ class FTAesImpl @Inject constructor(): FTAes {
             val ivParameterSpec = IvParameterSpec(iv)
 
             val e = SecretKeySpec(aesKey.toByteArray(Charsets.UTF_8), "AES")
-            @SuppressLint("GetInstance") val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
+            @SuppressLint("GetInstance") val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
 
             cipher.init(Cipher.DECRYPT_MODE, e, ivParameterSpec)
             output = cipher.doFinal(Base64.decode(input, Base64.NO_WRAP))
         } catch (var5: Exception) {
-            println(var5.toString())
+            Timber.e("decrypt failed : ${var5.message}")
         }
 
         return output?.let { String(it) } ?: ""

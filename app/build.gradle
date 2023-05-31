@@ -4,6 +4,9 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'com.google.gms.google-services'
+    id 'kotlin-parcelize'
+
 
 }
 
@@ -137,4 +140,11 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     //security
     implementation "androidx.security:security-crypto:1.0.0"
+    //firebase BOM and its version
+    implementation platform('com.google.firebase:firebase-bom:30.0.0')
+    // Firebase Cloud Messaging (Kotlin)
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    //shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
 }

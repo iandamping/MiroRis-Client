@@ -4,9 +4,9 @@ import com.squareup.moshi.Json
 
 data class BankResponse(
     @Json(name = "id")
-    private val bankId: String,
+    val bankId: String?,
     @Json(name = "nama_bank")
-    private val bankName: String,
+    val bankName: String?,
     @Json(name = "code_bank")
-    private val bankCode: String
+    val bankCode: String?
 )

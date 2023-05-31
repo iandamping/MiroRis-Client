@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/viewFinder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/captureImage"
+        android:layout_width="@dimen/capture_image_width"
+        android:layout_height="@dimen/capture_image_height"
+        android:layout_marginBottom="@dimen/spacing_large"
+        android:contentDescription="@string/press_to_capture_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_capture" />
+
+    <ImageView
+        android:id="@+id/switchCamera"
+        android:layout_width="@dimen/switch_image_width"
+        android:layout_height="@dimen/switch_image_height"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginEnd="@dimen/spacing_large"
+        android:contentDescription="@string/switch_to_front_camera"
+        app:layout_constraintEnd_toEndOf="@+id/viewFinder"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_switch_camera" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

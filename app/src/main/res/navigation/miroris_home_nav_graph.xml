@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragmentHome"
-        android:name="com.spe.miroris.feature.FragmentHome">
+        android:name="com.spe.miroris.feature.home.FragmentHome">
         <action
             android:id="@+id/action_fragmentHome_to_dialogFragmentFilter"
             app:destination="@id/dialogFragmentFilter" />
@@ -28,27 +28,76 @@
         <action
             android:id="@+id/action_fragmentHome_to_fragmentLogin"
             app:destination="@id/fragmentLogin" />
+        <action
+            android:id="@+id/action_fragmentHome_to_fragmentDetailProduct"
+            app:destination="@id/fragmentDetailProduct" />
     </fragment>
     <dialog
         android:id="@+id/dialogFragmentFilter"
-        android:name="com.spe.miroris.feature.DialogFragmentFilter"
-        android:label="DialogFragmentFilter" />
+        android:name="com.spe.miroris.feature.home.dialog.DialogFragmentFilter"
+        android:label="DialogFragmentFilter" >
+        <argument
+            android:name="FilterData"
+            app:argType="com.spe.miroris.feature.home.common.ParcelableFilterData" />
+        <argument
+            android:name="SavedSelectedCategory"
+            app:argType="string" />
+        <argument
+            android:name="SavedSelectedFund"
+            app:argType="string" />
+    </dialog>
     <fragment
         android:id="@+id/fragmentProfile"
-        android:name="com.spe.miroris.feature.FragmentProfile"
+        android:name="com.spe.miroris.feature.profile.FragmentProfile"
         android:label="Profile" >
         <action
             android:id="@+id/action_fragmentProfile_to_fragmentEditProfile"
             app:destination="@id/fragmentEditProfile" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentHome"
+            app:destination="@id/fragmentHome"
+            app:popUpTo="@id/fragmentHome"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentChangePassword"
+            app:destination="@id/fragmentChangePassword" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentInvestmentManagement"
+            app:destination="@id/fragmentInvestmentManagement" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentFundManagement"
+            app:destination="@id/fragmentFundManagement" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentProductManagement"
+            app:destination="@id/fragmentProductManagement" />
     </fragment>
     <fragment
         android:id="@+id/fragmentEditProfile"
-        android:name="com.spe.miroris.feature.FragmentEditProfile"
-        android:label="Edit Profile" />
+        android:name="com.spe.miroris.feature.profile.edit.FragmentEditProfile"
+        android:label="Edit Profile" >
+        <action
+            android:id="@+id/action_fragmentEditProfile_to_fragmentHome"
+            app:destination="@id/fragmentHome"
+            app:popUpTo="@id/miroris_home_nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_fragmentEditProfile_to_dialogSelectCameraOrGalleryEditProfile"
+            app:destination="@id/dialogSelectCameraOrGalleryEditProfile" />
+        <action
+            android:id="@+id/action_fragmentEditProfile_to_fragmentTakePictureEditProfile"
+            app:destination="@id/fragmentTakePictureEditProfile" />
+        <argument
+            android:name="PassedUri"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_fragmentEditProfile_to_fragmentChangePassword"
+            app:destination="@id/fragmentChangePassword" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentAddProductFirstStep"
         android:name="com.spe.miroris.feature.addProduct.FragmentAddProductFirstStep"
-        android:label="FragmentAddProductFirstStep">
+        android:label="Tambah Produk">
         <action
             android:id="@+id/action_fragmentAddProductFirstStep_to_dialogSelectCameraOrGallery"
             app:destination="@id/dialogSelectCameraOrGallery" />
@@ -80,21 +129,185 @@
     <fragment
         android:id="@+id/fragmentAddProductSecondStep"
         android:name="com.spe.miroris.feature.addProduct.FragmentAddProductSecondStep"
-        android:label="FragmentAddProductSecondStep" />
+        android:label="Tambah Produk" >
+        <argument
+            android:name="passedProductName"
+            app:argType="string" />
+        <argument
+            android:name="passedProductDesc"
+            app:argType="string" />
+        <argument
+            android:name="passedBankCode"
+            app:argType="string" />
+        <argument
+            android:name="passedProductAccountNumber"
+            app:argType="string" />
+        <argument
+            android:name="passedOwnAccount"
+            app:argType="string" />
+        <argument
+            android:name="passedCategory"
+            app:argType="string" />
+        <argument
+            android:name="passedCategoryId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_fragmentAddProductSecondStep_to_fragmentProductManagement"
+            app:destination="@id/fragmentProductManagement"
+            app:popUpTo="@id/fragmentProductManagement"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentProductManagement"
         android:name="com.spe.miroris.feature.productManagement.controller.FragmentProductManagement"
-        android:label="FragmentProductManagement" />
+        android:label="Produk Saya">
+        <action
+            android:id="@+id/action_fragmentProductManagement_to_fragmentAddProductFirstStep"
+            app:destination="@id/fragmentAddProductFirstStep" />
+        <action
+            android:id="@+id/action_fragmentProductManagement_to_fragmentEditProductFirstStep"
+            app:destination="@id/fragmentEditProductFirstStep" />
+        <action
+            android:id="@+id/action_fragmentProductManagement_to_fragmentDetailProduct"
+            app:destination="@id/fragmentDetailProduct" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentFundManagement"
         android:name="com.spe.miroris.feature.fundManagement.FragmentFundManagement"
-        android:label="FragmentFundManagement" />
+        android:label="List Pendanaan" />
     <fragment
         android:id="@+id/fragmentInvestmentManagement"
         android:name="com.spe.miroris.feature.investmentManagement.FragmentInvestmentManagement"
-        android:label="FragmentInvestmentManagement" />
+        android:label="List Investasi" />
     <fragment
         android:id="@+id/fragmentLogin"
-        android:name="com.spe.miroris.feature.FragmentLogin"
-        android:label="Login" />
+        android:name="com.spe.miroris.feature.login.FragmentLogin"
+        android:label="Login" >
+        <action
+            android:id="@+id/action_fragmentLogin_to_fragmentRegistration"
+            app:destination="@id/fragmentRegistration" />
+        <action
+            android:id="@+id/action_fragmentLogin_to_fragmentHome"
+            app:destination="@id/fragmentHome"
+            app:popUpTo="@id/fragmentHome"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentRegistration"
+        android:name="com.spe.miroris.feature.registration.FragmentRegistration"
+        android:label="Registrasi" >
+        <action
+            android:id="@+id/action_fragmentRegistration_to_fragmentHome"
+            app:destination="@id/fragmentHome"
+            app:popUpTo="@id/fragmentHome"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_fragmentRegistration_to_fragmentLogin"
+            app:destination="@id/fragmentLogin"
+            app:popUpTo="@id/fragmentLogin"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentChangePassword"
+        android:name="com.spe.miroris.feature.profile.changePassword.FragmentChangePassword"
+        android:label="Change Password" >
+        <action
+            android:id="@+id/action_fragmentChangePassword_to_fragmentHome"
+            app:destination="@id/fragmentHome"
+            app:popUpTo="@id/fragmentHome"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <dialog
+        android:id="@+id/dialogSelectCameraOrGalleryEditProfile"
+        android:name="com.spe.miroris.feature.profile.edit.openCameraEditProfile.DialogSelectCameraOrGalleryEditProfile"
+        android:label="DialogSelectCameraOrGalleryEditProfile" >
+        <action
+            android:id="@+id/action_dialogSelectCameraOrGalleryEditProfile_to_fragmentTakePictureEditProfile"
+            app:destination="@id/fragmentTakePictureEditProfile" />
+    </dialog>
+    <fragment
+        android:id="@+id/fragmentTakePictureEditProfile"
+        android:name="com.spe.miroris.feature.profile.edit.openCameraEditProfile.FragmentTakePictureEditProfile"
+        android:label="FragmentTakePictureEditProfile">
+        <action
+            android:id="@+id/action_fragmentTakePictureEditProfile_to_fragmentEditProfile"
+            app:destination="@id/fragmentEditProfile"
+            app:popUpTo="@id/fragmentEditProfile"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentEditProductFirstStep"
+        android:name="com.spe.miroris.feature.editProduct.FragmentEditProductFirstStep"
+        android:label="Edit Produk">
+        <action
+            android:id="@+id/action_fragmentEditProductFirstStep_to_fragmentEditProductTakePicture"
+            app:destination="@id/fragmentEditProductTakePicture" />
+        <action
+            android:id="@+id/action_fragmentEditProductFirstStep_to_dialogSelectCameraOrGalleryEditProduct"
+            app:destination="@id/dialogSelectCameraOrGalleryEditProduct" />
+        <action
+            android:id="@+id/action_fragmentEditProductFirstStep_to_fragmentEditProductSecondStep"
+            app:destination="@id/fragmentEditProductSecondStep" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentEditProductTakePicture"
+        android:name="com.spe.miroris.feature.editProduct.openCamera.FragmentEditProductTakePicture"
+        android:label="FragmentEditProductTakePicture">
+        <action
+            android:id="@+id/action_fragmentEditProductTakePicture_to_fragmentEditProductFirstStep"
+            app:destination="@id/fragmentEditProductFirstStep"
+            app:popUpTo="@id/fragmentEditProductTakePicture"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <dialog
+        android:id="@+id/dialogSelectCameraOrGalleryEditProduct"
+        android:name="com.spe.miroris.feature.editProduct.openCamera.DialogSelectCameraOrGalleryEditProduct"
+        android:label="DialogSelectCameraOrGalleryEditProduct">
+        <action
+            android:id="@+id/action_dialogSelectCameraOrGalleryEditProduct_to_fragmentEditProductTakePicture2"
+            app:destination="@id/fragmentEditProductTakePicture" />
+    </dialog>
+    <fragment
+        android:id="@+id/fragmentEditProductSecondStep"
+        android:name="com.spe.miroris.feature.editProduct.FragmentEditProductSecondStep"
+        android:label="FragmentEditProductSecondStep" >
+
+        <argument
+            android:name="passedProductName"
+            app:argType="string" />
+        <argument
+            android:name="passedProductDesc"
+            app:argType="string" />
+        <argument
+            android:name="passedBankCode"
+            app:argType="string" />
+        <argument
+            android:name="passedProductAccountNumber"
+            app:argType="string" />
+        <argument
+            android:name="passedOwnAccount"
+            app:argType="string" />
+        <argument
+            android:name="passedCategory"
+            app:argType="string" />
+        <argument
+            android:name="passedCategoryId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_fragmentEditProductSecondStep_to_fragmentProductManagement"
+            app:destination="@id/fragmentProductManagement"
+            app:popUpTo="@id/fragmentProductManagement"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentDetailProduct"
+        android:name="com.spe.miroris.feature.detail.FragmentDetailProduct"
+        android:label="Detail Produk" >
+        <argument
+            android:name="passedProductCatalog"
+            app:argType="com.spe.miroris.core.domain.model.ProductCatalog" />
+        <action
+            android:id="@+id/action_fragmentDetailProduct_to_fragmentLogin"
+            app:destination="@id/fragmentLogin" />
+    </fragment>
 </navigation>

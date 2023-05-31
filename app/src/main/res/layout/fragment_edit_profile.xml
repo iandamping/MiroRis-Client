@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="editProfileVm"
+            type="com.spe.miroris.feature.profile.edit.EditProfileViewModel" />
+    </data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -26,6 +31,7 @@
                 android:id="@+id/ivUserEditProfile"
                 android:layout_width="125dp"
                 android:layout_height="125dp"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toTopOf="@+id/guideline23"
                 app:layout_constraintEnd_toEndOf="@+id/view2"
                 app:layout_constraintStart_toStartOf="parent"
@@ -76,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/username"
                     android:imeOptions="actionNext"
+                    android:text="@={editProfileVm.userNameFlow}"
                     android:inputType="text"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -99,6 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
+                    android:text="@={editProfileVm.emailFlow}"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:singleLine="true" />
@@ -121,6 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/alamat"
+                    android:text="@={editProfileVm.addressFlow}"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:singleLine="true" />
@@ -144,6 +153,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/no_handphone"
+                    android:text="@={editProfileVm.phoneNumberFlow}"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:singleLine="true" />
@@ -168,6 +178,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/kota"
+                    android:text="@={editProfileVm.cityFlow}"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:singleLine="true" />
@@ -235,6 +246,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/nomor_rekening"
                     android:imeOptions="actionDone"
+                    android:text="@={editProfileVm.accountNumberFlow}"
                     android:inputType="number"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>

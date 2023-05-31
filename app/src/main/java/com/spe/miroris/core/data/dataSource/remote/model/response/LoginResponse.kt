@@ -4,5 +4,9 @@ import com.squareup.moshi.Json
 
 data class LoginResponse(
     @Json(name = "token")
-    private val userToken: String
+    val userToken: String,
+    @Json(name = "expired")
+    val expired: Int,
+    @Json(name = "email")
+    val email: String
 )

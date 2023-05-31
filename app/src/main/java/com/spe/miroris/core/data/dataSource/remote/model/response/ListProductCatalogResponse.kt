@@ -4,7 +4,11 @@ import com.squareup.moshi.Json
 
 data class ListProductCatalogResponse(
     @Json(name = "list")
-    private val listOfProductCatalog: List<ProductCatalogResponse>,
+    val listOfProductCatalog: List<ProductCatalogResponse>,
     @Json(name = "countdata")
-    private val countData: Int
+    val countData: Int,
+    @Json(name = "page")
+    val page: String,
+    @Json(name = "totalPage")
+    val totalPage: String
 )

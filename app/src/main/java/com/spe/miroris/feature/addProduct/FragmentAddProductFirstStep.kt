@@ -14,21 +14,28 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.spe.miroris.R
 import com.spe.miroris.base.BaseFragmentViewBinding
+import com.spe.miroris.core.data.dataSource.remote.model.response.BankResponse
+import com.spe.miroris.core.domain.model.CategoryProduct
 import com.spe.miroris.databinding.FragmentAddProductFirstStepBinding
+import com.spe.miroris.di.qualifier.CustomDialogQualifier
 import com.spe.miroris.feature.addProduct.adapter.EpoxyAddProductImageController
 import com.spe.miroris.feature.addProduct.adapter.MultiAdapterData
 import com.spe.miroris.feature.addProduct.openCamera.CameraGalleryEnum
 import com.spe.miroris.feature.addProduct.openCamera.DialogSelectCameraOrGalleryDirections
 import com.spe.miroris.feature.addProduct.openCamera.DialogSelectImage
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 private var PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.CAMERA)
 
@@ -46,7 +53,20 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
         }
     }
 
-    private val viewModel: AddProductFirstStepViewModel by activityViewModels()
+    private var listCategoryProduct: List<CategoryProduct> = mutableListOf()
+
+    @Inject
+    @CustomDialogQualifier
+    lateinit var customDialog: AlertDialog
+
+    private val addProductViewModelFirstStep: AddProductViewModelFirstStep by viewModels()
+
+    private var bankCode: String = ""
+    private var listBankResponse: List<BankResponse> = mutableListOf()
+    private var isMyAccountCode = "0"
+    private var selectedCategoryId: String = ""
+    private var selectedCategory: String = ""
+    private val viewModel: SharedAddProductViewModel by activityViewModels()
 
     private lateinit var epoxyAddProductImageController: EpoxyAddProductImageController
 
@@ -66,21 +86,150 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
     override fun initView() {
         epoxyAddProductImageController = EpoxyAddProductImageController(this)
         val spinner = binding.spBankSelection
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.default_bank_spinner,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            spinner.adapter = adapter
-        }
         spinner.onItemSelectedListener = this
+
+        with(binding.rvMiniAddProduct) {
+            setController(epoxyAddProductImageController)
+            LinearSnapHelper().attachToRecyclerView(this)
+        }
+
+        if (addProductViewModelFirstStep.getBankCode()
+                .isNotEmpty() && addProductViewModelFirstStep.getPhoneNumber().isNotEmpty()
+        ) {
+            binding.swOwnAccount.isChecked = true
+            isMyAccountCode = "1"
+        } else if (addProductViewModelFirstStep.getBankCode()
+                .isEmpty() && addProductViewModelFirstStep.getPhoneNumber().isEmpty()
+        ) {
+            binding.swOwnAccount.isChecked = false
+            isMyAccountCode = "0"
+        }
+
+        binding.textInputProductAccountNumber.setText(addProductViewModelFirstStep.getAccountNumber())
     }
 
     override fun viewCreated() {
+        observeBackStackValue()
+
+        setupSpinnerFromService()
+
+        observeRefreshToken()
+
+        observeCategoryProduct()
+
+
+        binding.swOwnAccount.setOnCheckedChangeListener { buttonView, isChecked ->
+            // Responds to switch being checked/unchecked
+            isMyAccountCode = if (isChecked) "1" else "0"
+        }
+        binding.btnContinue.setOnClickListener {
+            //we will check this later
+            val productName = binding.textInputProductName.text.toString()
+            val productDesc = binding.textInputProductDesc.text.toString()
+            val accountNumber = binding.textInputProductAccountNumber.text.toString()
+            when {
+                productName.isEmpty() -> {
+                    binding.textInputProductNameLayout.error =
+                        "Product name must be filled"
+                }
+
+                productDesc.isEmpty() -> {
+                    binding.textInputProductDescLayout.error =
+                        "Product description must be filled"
+                }
+
+                accountNumber.isEmpty() -> {
+                    binding.textInputProductAccountNumberLayout.error =
+                        "Account number name must be filled"
+                }
+
+                else -> {
+                    findNavController().navigate(
+                        FragmentAddProductFirstStepDirections.actionFragmentAddProductFirstStepToFragmentAddProductSecondStep(
+                            passedProductName = productName,
+                            passedProductDesc = productDesc,
+                            passedBankCode = bankCode,
+                            passedProductAccountNumber = accountNumber,
+                            passedOwnAccount = isMyAccountCode,
+                            passedCategory = selectedCategory,
+                            passedCategoryId = selectedCategoryId
+                        )
+                    )
+                }
+            }
+        }
+
+        consumeSuspend {
+            viewModel.listMiniImageData.collect { data ->
+                epoxyAddProductImageController.setData(data)
+            }
+        }
+
+    }
+
+    private fun observeCategoryProduct() {
+        consumeSuspend {
+            addProductViewModelFirstStep.categoryProductUiState.collect {
+                when {
+                    it.errorMessage.isNotEmpty() -> {
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(resources.getString(R.string.error_token_dialog_title))
+                            .setMessage(it.errorMessage)
+                            .setCancelable(false)
+                            .setPositiveButton(getString(R.string.ok)) { dialog, _ ->
+                                dialog.dismiss()
+                            }.show()
+                    }
+
+                    it.data != null -> {
+                        if (it.data.listOfCategoryProduct.isNotEmpty()) {
+                            listCategoryProduct = it.data.listOfCategoryProduct
+                        }
+                        if (it.data.listOfCategoryProduct.map { category -> category.categoryName }
+                                .isNotEmpty()) {
+                            ArrayAdapter(
+                                requireContext(),
+                                android.R.layout.simple_spinner_item,
+                                it.data.listOfCategoryProduct.map { category -> category.categoryName }
+                            ).also { adapter ->
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                                // Apply the adapter to the spinner
+                                binding.spCategoryTypeSelection.adapter = adapter
+                            }
+
+                            binding.spCategoryTypeSelection.onItemSelectedListener =
+                                object : AdapterView.OnItemSelectedListener {
+                                    override fun onItemSelected(
+                                        parent: AdapterView<*>?,
+                                        view: View?,
+                                        position: Int,
+                                        id: Long
+                                    ) {
+                                        val selectedPosition =
+                                            listCategoryProduct.indexOfFirst { product ->
+                                                product.categoryName == parent?.getItemAtPosition(
+                                                    position
+                                                ).toString()
+                                            }
+                                        selectedCategoryId =
+                                            listCategoryProduct[selectedPosition].categoryId
+                                        selectedCategory =
+                                            parent?.getItemAtPosition(position).toString()
+                                    }
+
+                                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                                    }
+
+                                }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    private fun observeBackStackValue() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
             BACK_STACK_ENTRY_KEY
         )
@@ -97,6 +246,7 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
                             findNavController().navigate(DialogSelectCameraOrGalleryDirections.actionDialogSelectCameraOrGalleryToFragmentTakePicture())
                         }
                     }
+
                     CameraGalleryEnum.GALLERY.name -> {
                         val intent = Intent(Intent.ACTION_PICK)
                         intent.type = "image/*"
@@ -104,31 +254,17 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
                     }
                 }
             }
-
-
-        with(binding.rvMiniAddProduct) {
-            setController(epoxyAddProductImageController)
-            LinearSnapHelper().attachToRecyclerView(this)
-        }
-        binding.swOwnAccount.setOnCheckedChangeListener { buttonView, isChecked ->
-            // Responds to switch being checked/unchecked
-        }
-        binding.btnContinue.setOnClickListener {
-            //we will check this later
-            findNavController().navigate(FragmentAddProductFirstStepDirections.actionFragmentAddProductFirstStepToFragmentAddProductSecondStep())
-        }
-
-        consumeSuspend {
-            viewModel.listMiniImageData.collect { data ->
-                epoxyAddProductImageController.setData(data)
-            }
-        }
-
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
+        val selectedPosition = listBankResponse.indexOfFirst {
+            it.bankName == parent.getItemAtPosition(pos).toString()
+        }
+        if (listBankResponse[selectedPosition].bankCode != null) {
+            bankCode = listBankResponse[selectedPosition].bankCode!!
+        }
 
     }
 
@@ -136,12 +272,79 @@ class FragmentAddProductFirstStep : BaseFragmentViewBinding<FragmentAddProductFi
         // Another interface callback
     }
 
+    private fun observeRefreshToken() {
+        consumeSuspend {
+            addProductViewModelFirstStep.refreshTokenUiState.collect {
+                when (it.successState) {
+                    RefreshTokenAddProductUiState.SuccessState.Initialize -> {}
+                    RefreshTokenAddProductUiState.SuccessState.Failed -> customDialog.dismiss()
+                    RefreshTokenAddProductUiState.SuccessState.Success -> {
+                        customDialog.show()
+                        addProductViewModelFirstStep.getBankData()
+                    }
+
+                }
+                if (it.errorMessage.isNotEmpty()) {
+                    customDialog.dismiss()
+                }
+            }
+        }
+    }
+
+    private fun setupSpinnerFromService() {
+        consumeSuspend {
+            addProductViewModelFirstStep.bankUiState.collect {
+
+                if (it.data.isNotEmpty()) {
+                    listBankResponse = it.data
+
+                    val selectedPosition = it.data.indexOfFirst { bank ->
+                        bank.bankName == addProductViewModelFirstStep.getBankName()
+                    }
+
+                    ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_spinner_item,
+                        it.data.map { bankData -> bankData.bankName }
+                    ).also { adapter ->
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        // Apply the adapter to the spinner
+                        binding.spBankSelection.adapter = adapter
+                        binding.spBankSelection.setSelection(selectedPosition)
+                    }
+                }
+                when (it.successState) {
+                    AddProductBankUiState.SuccessState.Initialize -> {
+                        customDialog.show()
+                    }
+
+                    AddProductBankUiState.SuccessState.Success -> {
+                        customDialog.dismiss()
+                    }
+
+                    AddProductBankUiState.SuccessState.Error -> {
+                        customDialog.dismiss()
+                    }
+
+                    AddProductBankUiState.SuccessState.RefreshToken -> {
+                        customDialog.dismiss()
+                        addProductViewModelFirstStep.refreshToken(
+                            email = addProductViewModelFirstStep.getUserEmail(),
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+
     override fun onEpoxyClick(data: MultiAdapterData) {
         when (data) {
             MultiAdapterData.Footer -> {
                 //open gallery or camera
                 showDialogSelectCameraOrGallery()
             }
+
             is MultiAdapterData.Main -> {
                 //open the selected image
                 val dialogFragment = DialogSelectImage(uri = data.image, listener = this)

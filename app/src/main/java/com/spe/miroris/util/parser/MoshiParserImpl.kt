@@ -1,7 +1,5 @@
 package com.spe.miroris.util.parser
 
-import com.spe.miroris.core.data.dataSource.remote.model.response.BaseResponse
-import com.spe.miroris.core.data.dataSource.remote.model.response.LoginResponse
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import java.lang.reflect.Type

@@ -15,7 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.spe.miroris.R
 import com.spe.miroris.base.BaseFragmentViewBinding
 import com.spe.miroris.databinding.FragmentTakePictureBinding
-import com.spe.miroris.feature.addProduct.AddProductFirstStepViewModel
+import com.spe.miroris.feature.addProduct.SharedAddProductViewModel
 import com.spe.miroris.feature.addProduct.adapter.MultiAdapterData
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,7 +31,7 @@ class FragmentTakePicture : BaseFragmentViewBinding<FragmentTakePictureBinding>(
 
     private val cameraVm: CameraViewModel by viewModels()
 
-    private val addProductVm: AddProductFirstStepViewModel by activityViewModels()
+    private val addProductVm: SharedAddProductViewModel by activityViewModels()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTakePictureBinding
         get() = FragmentTakePictureBinding::inflate

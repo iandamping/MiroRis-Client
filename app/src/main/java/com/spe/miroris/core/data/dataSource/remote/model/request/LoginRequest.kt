@@ -7,6 +7,8 @@ data class LoginRequest(
     private val email: String,
     @Json(name = "password")
     private val password: String,
+    @Json(name = "fcm_id")
+    private val fcmId: String,
     @Json(name = "signature")
     private val signature: String
 )

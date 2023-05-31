@@ -4,9 +4,13 @@ import com.squareup.moshi.Json
 
 data class ListFundResponse(
     @Json(name = "list")
-    private val listOfFund: List<FundResponse>,
-    @Json(name = "total_amount")
-    private val totalAmount: String,
+    val listOfFund: List<FundResponse>,
+    @Json(name = "total_amaount")
+    val totalAmount: String,
+    @Json(name = "page")
+    val page: String,
     @Json(name = "countdata")
-    private val countData: Int
+    val countData: Int,
+    @Json(name = "totalPage")
+    val totalPage: Int
 )

@@ -4,9 +4,9 @@ import com.squareup.moshi.Json
 
 data class TokenResponse(
     @Json(name = "access_token")
-    private val accessToken: String,
+    val accessToken: String,
     @Json(name = "type")
-    private val type: String,
+    val type: String,
     @Json(name = "expired")
-    private val expiredIn: String
+    val expiredIn: Int
 )

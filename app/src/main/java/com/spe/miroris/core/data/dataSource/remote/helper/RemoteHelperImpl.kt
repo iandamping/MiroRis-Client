@@ -13,11 +13,18 @@ import javax.inject.Inject
 
 class RemoteHelperImpl @Inject constructor(private val utilityHelper: UtilityHelper) :
     RemoteHelper {
-    override suspend fun <T> nonEncryptionCall(call: Response<BaseResponse<T>>): RemoteResult<T> {
+
+    companion object {
+        const val JSON_NULL = "json is null"
+        const val BODY_NULL = "response body is null"
+        const val ERROR_MESSAGE_NULL = "error message is null"
+        const val DATA_NULL = "data from service is null"
+    }
+        override suspend fun <T> nonEncryptionCall(call: Response<BaseResponse<T>>): RemoteResult<T> {
         return try {
             if (call.isSuccessful) {
                 return RemoteResult.Success(call)
-            } else return RemoteResult.Error(Exception(utilityHelper.getString(R.string.default_error_message)))
+            } else return RemoteResult.Error(Exception(call.errorBody()?.string() ?:utilityHelper.getString(R.string.default_error_message)))
         } catch (e: Exception) {
             RemoteResult.Error(Exception(utilityHelper.getString(R.string.default_error_message)))
         } catch (e: SocketException) {
@@ -34,8 +41,8 @@ class RemoteHelperImpl @Inject constructor(private val utilityHelper: UtilityHel
     override suspend fun nonEncryptionVoidCall(call: Response<VoidBaseResponse>): RemoteVoidResult {
         return try {
             if (call.isSuccessful) {
-                return RemoteVoidResult.Success
-            } else return RemoteVoidResult.Error(Exception(utilityHelper.getString(R.string.default_error_message)))
+                return RemoteVoidResult.Success(call)
+            } else return RemoteVoidResult.Error(Exception(call.errorBody()?.string() ?:utilityHelper.getString(R.string.default_error_message)))
         } catch (e: Exception) {
             RemoteVoidResult.Error(Exception(utilityHelper.getString(R.string.default_error_message)))
         } catch (e: SocketException) {
@@ -54,7 +61,7 @@ class RemoteHelperImpl @Inject constructor(private val utilityHelper: UtilityHel
         return try {
             if (call.isSuccessful) {
                 return RemoteEncryptedResult.Success(call)
-            } else return RemoteEncryptedResult.Error(Exception(utilityHelper.getString(R.string.default_error_message)))
+            } else return RemoteEncryptedResult.Error(Exception(call.errorBody()?.string() ?: utilityHelper.getString(R.string.default_error_message)))
         } catch (e: Exception) {
             RemoteEncryptedResult.Error(Exception(utilityHelper.getString(R.string.default_error_message)))
         } catch (e: SocketException) {
