@@ -4,5 +4,5 @@ sealed class RegisterRemoteResult {
 
     object Success : RegisterRemoteResult()
 
-    data class SourceError(val errorMessage: String) : RegisterRemoteResult()
+    data class Error(val errorMessage: String) : RegisterRemoteResult()
 }

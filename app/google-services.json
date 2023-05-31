@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "561594605745",
+    "project_id": "fir-bni-notification",
+    "storage_bucket": "fir-bni-notification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561594605745:android:cf9714166ae308370ac290",
+        "android_client_info": {
+          "package_name": "com.spe.miroris"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "561594605745-fpkoar0bdkfr9ecq8uhra807qdi0gfos.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4zBY8fVDIjjiE7rnbuxayUq4QM1R0roM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561594605745-fpkoar0bdkfr9ecq8uhra807qdi0gfos.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

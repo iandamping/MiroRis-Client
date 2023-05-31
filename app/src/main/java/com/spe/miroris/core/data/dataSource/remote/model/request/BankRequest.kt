@@ -3,10 +3,12 @@ package com.spe.miroris.core.data.dataSource.remote.model.request
 import com.squareup.moshi.Json
 
 data class BankRequest(
+    @Json(name = "limit")
+    private val limit: String,
     @Json(name = "search")
     private val search: BankNameRequest,
-    @Json(name = "picture")
-    private val picture: String
+    @Json(name = "signature")
+    private val signature: String
 )
 
 data class BankNameRequest(

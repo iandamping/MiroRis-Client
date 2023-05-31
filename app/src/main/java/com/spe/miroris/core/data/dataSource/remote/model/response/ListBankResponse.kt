@@ -4,8 +4,8 @@ import com.squareup.moshi.Json
 
 data class ListBankResponse(
     @Json(name = "list")
-    private val listOfBank: List<BankResponse>,
+    val listOfBank: List<BankResponse>,
     @Json(name = "countdata")
-    private val countData: Int
+    val countData: Int
 )
 

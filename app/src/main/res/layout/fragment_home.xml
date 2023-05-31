@@ -18,7 +18,7 @@
 
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/rvHomeBanner"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -99,7 +99,7 @@
         app:layout_constraintStart_toEndOf="@+id/ivHomeSelectList"
         app:layout_constraintTop_toBottomOf="@+id/svHomeProduct" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/rvHomeProduct"
         android:layout_width="0dp"
         android:layout_height="0dp"

@@ -13,10 +13,4 @@ interface HmacManager {
     )
     fun computeHMACSHA512(hmacKey: String, value: String): String
 
-    @Throws(
-        UnsupportedEncodingException::class,
-        NoSuchAlgorithmException::class,
-        InvalidKeyException::class
-    )
-    fun computeHMACSHA512Byte(hmacKey: String, value: String): ByteArray
 }

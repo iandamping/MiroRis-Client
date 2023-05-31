@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintDetail"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -38,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@+id/shapeableImageView" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/rvMiniDetailProduct"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -96,8 +97,44 @@
         app:layout_constraintTop_toTopOf="@+id/guideline33"
         app:shapeAppearanceOverlay="@style/qrCustomCorner"
         app:strokeColor="@color/black"
-        app:strokeWidth="2dp"
-        tools:src="@drawable/img_sample_qr" />
+        app:strokeWidth="2dp" />
+
+    <View
+        android:id="@+id/viewGenerateQr"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/box_transparent_dotted_background"
+        app:layout_constraintBottom_toTopOf="@+id/btnDownload"
+        app:layout_constraintEnd_toStartOf="@+id/guideline27"
+        app:layout_constraintStart_toStartOf="@+id/guideline34"
+        app:layout_constraintTop_toTopOf="@+id/guideline33" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_qr_code_2_24"
+        app:layout_constraintBottom_toBottomOf="@+id/ivProductDetailQr"
+        app:layout_constraintEnd_toEndOf="@+id/ivProductDetailQr"
+        app:layout_constraintStart_toStartOf="@+id/ivProductDetailQr"
+        app:layout_constraintTop_toTopOf="@+id/ivProductDetailQr" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="85dp"
+        android:layout_height="18dp"
+        android:gravity="center"
+        android:text="Generate Qr"
+        app:autoSizePresetSizes="@array/autosize_text_sizes"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="@+id/imageView11"
+        app:layout_constraintStart_toStartOf="@+id/imageView11"
+        app:layout_constraintTop_toBottomOf="@+id/imageView11" />
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnShare"
@@ -236,4 +273,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.55" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupGenerateQr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="imageView11,textView34,viewGenerateQr" />
+
+    <ImageView
+        android:id="@+id/ivQrisToDownload"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

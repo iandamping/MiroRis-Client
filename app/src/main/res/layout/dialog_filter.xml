@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <LinearLayout
@@ -43,6 +44,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/llCategory"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -58,10 +60,10 @@
 
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/tvSelectedCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Donasi" />
+                tools:text="Donasi" />
 
         </LinearLayout>
 
@@ -84,6 +86,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/llFunds"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -98,10 +101,10 @@
                 android:textSize="@dimen/letter_medium" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/tvSelectFund"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Non Profit" />
+                tools:text="Non Profit" />
 
         </LinearLayout>
 
@@ -116,6 +119,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_xmedium"
@@ -164,7 +168,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:stateListAnimator="@null"
-            android:text="Filter"
+            android:text="RESET"
             android:textColor="@color/text_yellow"
             app:backgroundTint="@android:color/transparent"
             app:cornerRadius="4dp"
@@ -178,7 +182,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:text="@string/login"
+            android:text="Terapkan"
             android:textColor="@color/white"
             app:backgroundTint="@color/button_blue" />
 

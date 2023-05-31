@@ -11,6 +11,5 @@ interface EncryptedRemoteTokenDataSource {
         model: String,
         brand: String,
         os: String,
-        token: String
     ): TokenRemoteResult<TokenResponse>
 }

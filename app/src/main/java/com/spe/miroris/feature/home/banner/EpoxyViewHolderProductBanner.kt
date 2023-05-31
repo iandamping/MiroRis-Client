@@ -1,0 +1,17 @@
+package com.spe.miroris.feature.home.banner
+
+import coil.load
+import com.spe.miroris.R
+import com.spe.miroris.databinding.ItemProductBannerBinding
+import com.spe.miroris.util.ViewBindingEpoxyModelWithHolder
+
+class EpoxyViewHolderProductBanner(private val data: MultiAdapterProductBannerData.ProductBanner) :
+    ViewBindingEpoxyModelWithHolder<ItemProductBannerBinding>() {
+    override fun ItemProductBannerBinding.bind() {
+        ivItemProductBanner.load(data.imageId)
+    }
+
+    override fun getDefaultLayout(): Int {
+        return R.layout.item_product_banner
+    }
+}

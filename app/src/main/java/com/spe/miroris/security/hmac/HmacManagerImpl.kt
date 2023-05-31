@@ -1,7 +1,6 @@
 package com.spe.miroris.security.hmac
 
 import java.io.UnsupportedEncodingException
-import java.nio.charset.StandardCharsets
 import java.security.InvalidKeyException
 import java.security.NoSuchAlgorithmException
 import javax.crypto.Mac
@@ -28,18 +27,5 @@ class HmacManagerImpl @Inject constructor():HmacManager {
             hexString.append(hex)
         }
         return String(hexString)
-    }
-
-    @Throws(
-        UnsupportedEncodingException::class,
-        NoSuchAlgorithmException::class,
-        InvalidKeyException::class
-    )
-    override fun computeHMACSHA512Byte(hmacKey: String, value: String): ByteArray {
-        val byteKey = hmacKey.toByteArray(StandardCharsets.UTF_8)
-        val mac: Mac = Mac.getInstance("HmacSHA512")
-        val keySpec = SecretKeySpec(byteKey, "HmacSHA512")
-        mac.init(keySpec)
-        return mac.doFinal(value.toByteArray(StandardCharsets.UTF_8))
     }
 }

@@ -11,5 +11,16 @@ enum class ResponseStatus : ResponseStatusCode {
             return 200
         }
     },
+    LoginOnUse {
+        override fun getCode(): Int {
+            return 308
+        }
+    },
+    RefreshToken {
+        override fun getCode(): Int {
+            return 401
+        }
+
+    }
 
 }

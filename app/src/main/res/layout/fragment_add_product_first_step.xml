@@ -108,6 +108,7 @@
                 android:id="@+id/rvMiniAddProduct"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
                 android:contentDescription="@string/add_your_product_here"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -116,6 +117,38 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline45"
                 app:layout_constraintTop_toTopOf="@+id/guideline48"
                 tools:listitem="@layout/item_footer_mini_image_add_product" />
+
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textSize="@dimen/letter_xsmall"
+                app:layout_constraintStart_toStartOf="@+id/guideline45"
+                app:layout_constraintTop_toBottomOf="@+id/rvMiniAddProduct" />
+
+            <Spinner
+                android:id="@+id/spCategoryTypeSelection"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:contentDescription="Category"
+                app:layout_constraintBottom_toBottomOf="@+id/textInputProductNameLayout"
+                app:layout_constraintEnd_toStartOf="@+id/guideline88"
+                app:layout_constraintStart_toStartOf="@+id/guideline45"
+                app:layout_constraintTop_toTopOf="@+id/guideline52" />
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/textView31"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Product Name"-->
+<!--                android:textSize="@dimen/letter_xsmall"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/guideline46"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/spCategoryTypeSelection"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/rvMiniAddProduct" />-->
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -129,7 +162,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/textInputProductDescLayout"
                 app:layout_constraintEnd_toStartOf="@+id/guideline46"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/guideline45"
+                app:layout_constraintStart_toStartOf="@+id/guideline88"
                 app:layout_constraintTop_toTopOf="@+id/guideline52">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -142,6 +175,17 @@
                     android:singleLine="true"
                     tools:text="@tools:sample/lorem/random" />
             </com.google.android.material.textfield.TextInputLayout>
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/textView32"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Product Description"-->
+<!--                android:textSize="@dimen/letter_xsmall"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/textInputProductDescLayout"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/guideline46"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/textInputProductDescLayout" />-->
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -188,7 +232,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:checked="true"
+                android:checked="false"
                 android:gravity="center"
                 android:text="@string/own_account"
                 app:layout_constraintBottom_toTopOf="@+id/textView2"
@@ -330,6 +374,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.60" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline88"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.50" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
